@@ -1,0 +1,4153 @@
+Rad sa fajlovima
+Učitati string iz tekstualnog fajla i provjeriti da li taj string predstavlja palinom(npr. Ana voli Milovana)
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    char a[40];
+    int i=0,j=0,ind=1;
+    FILE *fptr; //Deklarisanje pointera za fajl
+
+    fptr = fopen("test.txt","r"); //Otvaranje fajla
+
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+
+   fgets(a,sizeof a,fptr); //Pise sve iz fajla u string a
+   fclose(fptr); //Zatvaranje fajla
+   while(a[i]!='\0')
+    {
+       if(a[i]!=' ')
+       {
+           a[j]=a[i];
+           a[j]=toupper(a[j]);
+           j++;
+       }
+       i++;
+   }
+   a[j]='\0';
+   j=j-1;
+   i=0;
+   while(a[i]!='\0')
+    {
+        if(a[j]!=a[i])
+            ind=0;
+        i++;
+        j--;
+    }
+    if(ind==1)
+        printf("Jeste palinom");
+    else
+        printf("Nije palinom");
+   return 0;
+}
+
+Fajl se sastoji od slova a,b...z i praznih mjesta. Napisati program koji određuje koliko ima riječi u kojima se bar jednom pojavljuje slovo a
+
+int main()
+{
+    char a[100];
+    int i=0,ind=0,br=0;
+    FILE *fptr; //Deklarisanje pointera za fajl
+
+    fptr = fopen("test.txt","r"); //Otvaranje fajla
+
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+
+   fgets(a,sizeof a,fptr); //Pise sve iz fajla u string a
+   fclose(fptr); //Zatvaranje fajla
+   while(a[i]!='\0')
+    {
+       if(a[i]==' ')
+       {
+           if(ind!=0)
+            br++;
+           ind=0;
+       }
+       if(a[i]=='a')
+       ind++;
+       i++;
+   }
+   if(ind!=0)
+    br++;
+   printf("A se pjavluje u %d rijeci",br);
+   return 0;
+}
+
+U unijetom fajlu maknuti sva prazna mjesta
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    char a[100];
+    int i=0,j=0,ind=1;
+    FILE *fptr; //Deklarisanje pointera za fajl
+
+    fptr = fopen("test.txt","r"); //Otvaranje fajla za citanje
+
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+
+   fgets(a,sizeof a,fptr); //Pise sve iz fajla u string a
+   fclose(fptr); //Zatvaranje fajla
+   while(a[i]!='\0')
+    {
+       if(a[i]!=' ')
+       {
+           a[j]=a[i];
+           j++;
+       }
+       i++;
+   }
+   fptr = fopen("test.txt","w"); //Otvaranje fajla za pisanje
+   fprintf(fptr,"%s",a);
+   fclose(fptr); //Zatvaranje fajla
+}
+
+Maknuti znak # iz prvih 40 karaktera unijetog fajla
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    char a[40];
+    int i=0,j=0,ind=1;
+    FILE *fptr; //Deklarisanje pointera za fajl
+
+    fptr = fopen("test.txt","r"); //Otvaranje fajla za citanje
+
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+
+   fgets(a,sizeof a,fptr); //Pise sve iz fajla u string a, upsiace samo prvih n karaktera iz a[n] u deklaraciji vrijednosti
+   fclose(fptr); //Zatvaranje fajla
+   while(a[i]!='\0')
+    {
+       if(a[i]!='#')
+       {
+           a[j]=a[i];
+           j++;
+       }
+       i++;
+   }
+   fptr = fopen("test.txt","w"); //Otvaranje fajla za pisanje
+   fprintf(fptr,"%s",a);
+   fclose(fptr); //Zatvaranje fajla
+}
+
+Napisati program koji ucitava tekstualni fajl i prebacuje sve iz njega u uppercase i upisuje u novi fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    char a[100];
+    int i=0,j=0,ind=1;
+    FILE *fptr; //Deklarisanje pointera za fajl
+
+    fptr = fopen("test.txt","r"); //Otvaranje fajla za citanje
+
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+
+   fgets(a,sizeof a,fptr); //Pise sve iz fajla u string a, upsiace samo prvih n karaktera iz a[n] u deklaraciji vrijednosti
+   fclose(fptr); //Zatvaranje fajla
+   while(a[i]!='\0')
+    {
+       a[i]=toupper(a[i]);
+       i++;
+   }
+   fptr = fopen("novi.txt","w"); //Pravi novi fajl za pisanje
+   fprintf(fptr,"%s",a);
+   fclose(fptr); //Zatvaranje fajla
+}
+
+Napisati program koji upisuje sva slova i njihov ascii kod u novi fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    FILE *fptr; //Deklarisanje pointera za fajl
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    char c1='A',c2='a';
+    int i;
+    fptr = fopen("novi.txt","w"); //Pravi novi fajl za pisanje
+    for(i=0;i<26;i++)
+    {
+        fprintf(fptr,"%c %c\n",c1,c2);
+        c1++;
+        c2++;
+    }
+    fclose(fptr); //Zatvaranje fajla
+}
+
+7.  U fajlu je zadat jedan broj, napisati program za pogađanje broja
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    FILE *fptr; //Deklarisanje pointera za fajl
+    int a,broj=0;
+    int i;
+    printf("Pogodite broj: ");
+    fptr = fopen("test.txt","r"); //Pravi novi fajl za pisanje
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    fscanf(fptr,"%d",&a);
+    fclose(fptr); //Zatvaranje fajla
+    scanf("%d",&broj);
+    while(broj!=a)
+    {
+        printf("Niste pogodili\nPogodite opet: ");
+        scanf("%d",&broj);
+
+    }
+    printf("Pogodili ste");
+    return 1;
+} 
+U svakom redu tekstualnog fajla upisana je jedna riječ, dužine do 20 karaktera. Rečenice iz ovog fajla sortirati i upisati ih u novi fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    char a[100][20],temp[20];
+    int i=0,j=0,n;
+    FILE *fptr; //Deklarisanje pointera za fajl
+
+    fptr = fopen("test.txt","r"); //Otvaranje fajla za citanje
+
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+
+   while (fscanf(fptr, "%s", a[i]) == 1)
+   {
+       i++;
+   }
+   n=i;
+   for(int i=0; i<n; i++) //Najlaksi algoritam za sortiranje koji je poželjno zapamtiti
+    {
+        for(int j=0; j<n-1-i; j++){
+            if(strcmp(a[j], a[j+1]) > 0){
+                strcpy(temp, a[j]);
+                strcpy(a[j], a[j+1]);
+                strcpy(a[j+1], temp);
+            }
+        }
+    }
+    for(i=0;i<n;i++)
+        printf("%s ",a[i]);
+   fclose(fptr); //Zatvaranje fajla
+}
+
+Napraviti program sa infinite loop-om koji upisuje podataka studenata koje je unio korisnik u fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    char a[20],b[20],c[20];
+    int ind=2;
+    FILE *fptr; //Deklarisanje pointera za fajl
+    fptr = fopen("novi.txt","w"); //Otvaranje fajla za citanje
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    while(ind!=0) //Stvara inf loop iz kog ze izlazi kad korisnik kaze da se izadje
+    {
+        printf("\nUnesite 1 da upisete studenta, unesite 0 da izadjete iz programa: ");
+        scanf("%d",&ind);
+        if(ind==1)
+        {
+            printf("Unesite ime studenta: ");
+            scanf("%s",&a);
+            printf("Unesite prezime studenta: ");
+            scanf("%s",&b);
+            printf("Unesite datum studenta: ");
+            scanf("%s",c);
+            fprintf(fptr,"Ime: %s %s  ||| Datum rodjenja: %s \n",a,b,c);
+        }
+    }
+    fclose(fptr); //Zatvaranje fajla
+}
+
+11. Zadati visinu piramide i upisati je u novi fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main() {
+   int i, sp, red, k = 0, br1 = 0, br2 = 0;
+   printf("Unesite broj redova: ");
+   scanf("%d", &red);
+   FILE *fptr; //Deklarisanje pointera za fajl
+   fptr = fopen("novi.txt","w"); //Otvaranje fajla za citanje
+if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+   for (i = 1; i <= red; ++i) {
+      for (sp = 1; sp <= red - i; ++sp) { //provjerava koji je nivo piramide i sto je blizi donjim novoima odstampat ce manje praznina
+            fprintf(fptr,"  ");
+         br1++;
+      }
+      while (k != 2 * i - 1) {
+         if (br1 <= red - 1) { //stampa lijevi i centralni dio piramide
+            fprintf(fptr,"* ");
+            br1++;
+         } else { //stampa desni dio piramide
+            br2++;
+           fprintf(fptr,"* ");
+         }
+         k++;
+      }
+      br2 = br1 = k = 0; //vraca sve pomocne vrijednosti na originalnu vrijednost
+     fprintf(fptr,"\n"); //prebacuje u novi red stampu
+   }
+   return 0;
+}
+
+12. Usvakom redu u fajlu se nalazi po riječ, provjeriti koje riječi iz unijetog fajla sadrže jednak broj slova a i b, upisati ih u jednom redu u novom fajlu u formatu "riječ#riječ"
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    char s[100][50];
+    int i=0,j=0,n,a,b,m=0;
+    FILE *fptr1; //Deklarisanje pointera za fajl
+    FILE *fptr2;
+    fptr1 = fopen("test.txt","r"); //Otvaranje fajla za citanje
+    fptr2 = fopen("novi.txt","w"); //Otvaranje fajla za pisanje
+    if(fptr1 == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    if(fptr2 == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+   while (fscanf(fptr1, "%s", s[i]) == 1)
+   {
+       i++;
+   }
+   n=i;
+   for(i=0;i<=n;i++)
+   {
+       a=0;
+       b=0;
+       j=0;
+       while(s[i][j]!='\0')
+       {
+           if(s[i][j]=='a')
+            a++;
+           else if(s[i][j]=='b')
+            b++;
+           j++;
+       }
+       if(a==b&&a!=0)
+       {
+           if(m!=0)
+           fprintf(fptr2,"#%s",s[i]);
+           else
+            fprintf(fptr2,"%s",s[i]);
+            m++;
+       }
+   }
+   fclose(fptr1); //Zatvaranje fajla
+   fclose(fptr2);
+}
+13. Napisati program koji upisuje sve prirodne brojeve manje od zadatog broja, njihove kvadrate i kubove i unijeti ih u novu fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    int n,i;
+    FILE *fptr; //Deklarisanje pointera za fajl
+    fptr = fopen("novi.txt","w"); //Otvaranje fajla za pisanje
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    printf("Unesite prirodan broj: ");
+    scanf("%d",&n);
+    for(i=1;i<n;i++)
+        fprintf(fptr,"Broj: %d // Kvadrat: %d // Kub: %d\n",i,i*i,i*i*i);
+   fclose(fptr); //Zatvaranje fajla
+}
+
+14. Svaki red fajla sadrži po jedan cio broj napisati koji štampa najmanji i najveći
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    int min,max,i;
+    FILE *fptr;
+    fptr = fopen("test.txt","r");
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    fscanf(fptr, "%d", &max);
+    min=max;
+    while(fscanf(fptr, "%d", &i)!=EOF)//provjerava jel kraj fajla
+       if(i>max)
+        max=i;
+       else if(i<min)
+        min=i;
+
+    printf("Minimum je: %d\nMaksimum je:%d",min,max);
+    fclose(fptr);
+}
+
+15. Svaki red u fajlu sadrži po cio broj. Kreirati novi fajl gdje su brojevi u neparnim redovima udvostruceni
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    int a,i=1;
+    FILE *fptr1;
+    FILE *fptr2;
+    fptr1 = fopen("test.txt","r");
+    fptr2 = fopen("novi.txt","w");
+    if(fptr1 == NULL||fptr2 == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    while(fscanf(fptr1, "%d", &a)!=EOF)//provjerava jel kraj fajla
+       {
+           if(i%2==0)
+            fprintf(fptr2,"%d\n",a);
+           else
+            fprintf(fptr2,"%d\n",a*2);
+           i++;
+       }
+    fclose(fptr1);
+    fclose(fptr2);
+}
+16. Napisati program koji upisuje sve trocifrene brojeve cija je suma cifara paran broj i koji su istovremeno prosti u novi fajl sa 5 brojeva po redu
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    int i,j=0,sum,n,ind;
+    FILE *fptr;
+    fptr = fopen("novi.txt","w");
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    for(i=100;i<1000;i++)
+    {
+        sum=0;
+        n=i;
+        ind=1;
+        while(n!=0)
+        {
+            sum=sum+n%10;
+            n=n/10;
+        }
+        sum=sum%2;
+        n=2;
+        while(n<i/2)
+        {
+            if(i%n==0)
+            ind=0;
+            n++;
+        }
+
+
+        if(ind==1 && sum==0)
+            if(j<4)
+            {
+                j++;
+                fprintf(fptr,"%d ",i);
+            }
+            else
+            {
+                j=0;
+                fprintf(fptr,"%d\n",i);
+            }
+
+    }
+    fclose(fptr);
+}
+
+17. Svaki red fajla sadrži broj, odštampati sve brojeve djeljive sa 2
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    int a,i=1;
+    FILE *fptr;
+    fptr = fopen("test.txt","r");
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    printf("Brojevi djeljivi sa 2 su: ");
+    while(fscanf(fptr, "%d", &a)!=EOF)
+       {
+           if(a%2==0)
+               printf("%d ",a);
+           i++;
+       }
+    fclose(fptr);
+}
+
+Dinamička alokacija memorije
+1. Računanje polinoma sa dinamičkom alokacijom i dealokacijom memorije
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    int n,i;
+    float *a,x,y=0; //kako bi napravili dinamicki niz pravnimo pokazivac na neku adresu
+    printf("Unesi red polinoma: ");
+    scanf("%d",&n);
+    a=(float *)malloc(sizeof(float)*(n+1));
+    if(a==NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    printf("Unesi vrijednost promjenljive x: ");
+    scanf("%f",&x);
+    printf("Unesi elemente niza: ");
+    for(i=0;i<=n;i++)
+    {
+        scanf("%f",&a[i]); //sad tretiramo pokazivacku promjenljivu kao niz, jer ce svaka adresa kad dodamo 1 na nju biti kao novi element niza
+        y+=a[i]*pow(x,i);
+    }
+    free(a); //oslobadjamo memoriju
+    printf("Vrijednost polinoma je: %f",y);
+}
+
+2. Napisati program od unesenog dinamickog niza pravi nova dva dinamička niza sa pozitivnim i negativnim brojevima
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    int n,i,j=0,k=0,*a,*b,*c; //kako bi napravili dinamicki niz pravnimo pokazivac na neku adresu
+    printf("Unesi duzinu niza: ");
+    scanf("%d",&n);
+    printf("Unesi clanove niza: \n");
+    if(n<=0)
+    {
+        printf("Greska ");
+        exit(1);
+    }
+    a=(int *)malloc(sizeof(int)*n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+        if(a[i]<0)
+            k++;
+        else
+            j++;
+    }
+    c=(int *)malloc(sizeof(int)*k);
+    b=(int *)malloc(sizeof(int)*j);
+    j=0;
+    k=0;
+    for(i=0;i<n;i++)
+    {
+        if(a[i]<0)
+        {
+            c[k]=a[i];
+            k++;
+        }
+        else
+        {
+            b[j]=a[i];
+            j++;
+        }
+    }
+    free(a);
+    printf("Pozitovni clanovi su: ");
+    for(i=0;i<j;i++)
+        printf("%d ",b[i]);
+    printf("\nNegativni clanovi su: ");
+    for(i=0;i<k;i++)
+        printf("%d ",c[i]);
+    free(b);
+    free(c);
+}
+
+3. Učitati niz iz fajla a zatim formirati dva dinamička niza. Elementi prvog niza predstavljaju zbir dva susjedna elementa niza X a elementi drugog razliku. Upisati formirane nizove u isti fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    FILE *fptr;
+    int m[50],n,i=0,j=0,k=0,*a,*b; //kako bi napravili dinamicki niz pravnimo pokazivac na neku adresu
+    fptr = fopen("test.txt","r");
+    if(fptr == NULL)
+    {
+        printf("Greska");
+        exit(1);
+    }
+    while(fscanf(fptr, "%d", &m[i])!=EOF)
+        i++;
+    n=i-1;
+    a=(int *)malloc(sizeof(int)*(n));
+    b=(int *)malloc(sizeof(int)*(n));
+    for(i=0;i<n;i++)
+    {
+        a[i]=m[i]+m[i+1];
+        b[i]=m[i]-m[i+1];
+    }
+    printf("Zbir susjednih clanova je: ");
+    for(i=0;i<n;i++)
+        printf("%d ",a[i]);
+    printf("\nRazlika susjednih clanova je: ");
+    for(i=0;i<n;i++)
+        printf("%d ",b[i]);
+}
+
+4. Napisati program sa realokacijom memorije koja prikazuje adrese memorije
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+  int *ptr, i , n1, n2;
+  printf("Unesite velicinu niza: ");
+  scanf("%d", &n1);
+  ptr = (int*) malloc(n1 * sizeof(int));
+  printf("Adrese clanova iniciajlno alociranog niza:\n");
+  for(i = 0; i < n1; ++i)
+    printf("%p\n",ptr + i);
+  printf("\nEnter the new size: ");
+  scanf("%d", &n2);
+  // Ovaj dio koda sluzi za realokaciju memorije, tj povecat ce/smanjit kolicinu memorije koju zauzima
+  ptr = realloc(ptr, n2 * sizeof(int));
+  printf("Adrese novoalociranog niza: \n");
+  for(i = 0; i < n2; ++i)
+    printf("%p\n", ptr + i);
+  free(ptr);
+  return 0;
+}
+5. Napisati program sa dinamickom alokacijom niza cijelih brojeva koji racuna sumu
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+  int n, i, *ptr, sum = 0;
+  printf("Unesite duzinu niza: ");
+  scanf("%d", &n);
+  ptr = (int*) calloc(n, sizeof(int)); //calloc alocira memoriju i inicualizuje sve vrijednosti sa 0
+  if(ptr == NULL) {
+    printf("Greska");
+    exit(0);
+  }
+  printf("Unesite clanove niza: ");
+  for(i = 0; i < n; ++i) {
+    scanf("%d", ptr + i);
+    sum += *(ptr + i);
+  }
+  printf("Suma je %d", sum);
+  free(ptr);
+  return 0;
+}
+
+6. Napisati program koji sortira dinamicki niz
+
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+    int i,j,n;
+    float *element,temp;
+    printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+    element=(float*)calloc(n,sizeof(float));  // Memorija se alocira za x broj elemenata
+    if(element==NULL)
+    {
+        printf("\n Greska");
+        exit(0);
+    }
+    printf("\n");
+    for(i=0;i<n;++i)
+    {
+        scanf("%f",element+i);
+    }
+    for(i=0;i<n;++i)
+    {
+        for(j=0;j<n;++j)
+            if(*(element+i)<*(element+j))
+            {
+                temp=*(element+i);
+                *(element+i)=*(element+j);
+                *(element+j)=temp;
+            }
+    }
+    printf("\nSortiran niz: \n");
+    for(i=0;i<n;++i)
+    printf("%.2f\n",*(element+i));
+    return 0;
+}
+7. Napisati program koji trazi najveci clan dinamickog niza
+
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+    int i,n;
+    float *element;
+	printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+    element=(float*)calloc(n,sizeof(float)); 
+    if(element==NULL)
+    {
+        printf("\n Greska");
+        exit(0);
+    }
+    printf("\n");
+    for(i=0;i<n;++i)
+       scanf("%f",element+i);
+    for(i=1;i<n;++i)
+       if(*element<*(element+i))
+           *element=*(element+i);
+    printf("\n Najveca vrijednost je :  %.2f",*element);
+    return 0;
+}
+
+8. Dinamicki alocirati niz stringova
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+int main()
+{
+    int n,i;
+    char **s;
+    char temp[50];
+    printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+     s=malloc(n*sizeof(char *));
+    for(i=0;i<n;i++)
+    {
+        scanf("%s", temp);
+        s[i]= (char*)malloc(strlen(temp)*sizeof(char));
+        strcpy(s[i],temp);
+    }
+    printf("\nUneseni stirngovi su: \n");
+    for(i=0;i<n;i++)
+    {
+        printf("%d. %s\n",i+1,s[i]);
+    }
+    for(i=0;i<n;i++)
+        free(s[i]);
+    free(s);
+    return 0;
+}}9. Dinamicki alocirati matricu
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+int main()
+{
+    int n,m,j,i;
+    int **a;
+    printf("Unesite n: ");
+    scanf("%d",&n);
+    printf("Unesite m: ");
+    scanf("%d",&m);
+    a=malloc(n*sizeof(int *));
+    printf("Unesite elemente matrice: \n");
+    for(i=0;i<n;i++)
+    {
+        a[i]=malloc(m*sizeof(int));
+        for(j=0;j<m;j++)
+            scanf("%d",&a[i][j]);
+    }
+    printf("Elementi matrice su: \n");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<m;j++)
+            printf("%d ",a[i][j]);
+        printf("\n");
+    }
+    for(i=0;i<n;i++)
+        free(a[i]);
+    free(a);
+    return 0;
+}
+
+10. Dinamicki alocirati strukturu
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+struct test
+{
+    int id;
+    char ime[50];
+};
+int main()
+{
+    int n,i;
+    struct  test *a;
+    printf("Unesite n: ");
+    scanf("%d",&n);
+    a=malloc(n*sizeof(struct test));
+    printf("Unesite elemente struktura: \n");
+    for(i=0;i<n;i++)
+        scanf("%d %s",&a[i].id,&a[i].ime);
+    for(i=0;i<n;i++)
+    {
+        printf("%d %s\n",a[i].id,a[i].ime);
+    }
+    free(a);
+    return 0;
+}
+
+11. Kreirati dinamički realnih niz proizvoljne dužine, i od njega napraviti dva dinamička niza napravjenih od brojeva manjih i većih od aritmetičkog centras
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+void main()
+{
+    int n,i,j=0,k=0;
+    float *a,*b,*c,sum=0;
+    printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+    printf("Unesite clanove niza: ");
+    a=malloc(n*sizeof(float));
+    b=malloc(sizeof(float));
+    c=malloc(sizeof(float));
+    for(i=0;i<n;i++)
+    {
+        scanf("%f",&a[i]);
+        sum=sum+a[i];
+    }
+    sum=sum/n;
+    for(i=0;i<n;i++)
+    {
+        if(a[i]<sum)
+        {
+            b=realloc(b,(j+1)*sizeof(float));
+            b[j]=a[i];
+            j++;
+        }
+        else
+        {
+            c=realloc(c,(k+1)*sizeof(float));
+            c[k]=a[i];
+            k++;
+        }
+    }
+    printf("\nBrojevi manji od artimetickog centra su: ");
+    for(i=0;i<j;i++)
+        printf("%f ",b[i]);
+    printf("\nBrojevi veci od artimetickog centra su: ");
+    for(i=0;i<k;i++)
+        printf("%f ",c[i]);
+}
+12. Dinamicki alocirati strukturu student(id, ime,prezime, prosjek) i upisati je u novom fajlu, zajedno sa prosjekom studenata.
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+struct stud
+{
+    int id;
+    char ime[50];
+    char prezime[50];
+    float prosjek;
+};
+
+int main()
+{
+    int n,i;
+    float suma=0;
+    struct  stud *a;
+    FILE *fptr;
+    fptr = fopen("novi.txt","w");
+    printf("Unesite broj studenata: ");
+    scanf("%d",&n);
+    a=malloc(n*sizeof(struct stud));
+    printf("Unesite podatke studenata: \n");
+    for(i=0;i<n;i++)
+        scanf("%d %s %s %f",&a[i].id,&a[i].ime,&a[i].prezime,&a[i].prosjek);
+    fprintf(fptr,"Podaci studenata: \n");
+    for(i=0;i<n;i++)
+    {
+        fprintf(fptr,"%d %d %s %s %f\n",i+1,a[i].id,a[i].ime,a[i].prezime,a[i].prosjek);
+        suma=suma+a[i].prosjek;
+    }
+    fprintf(fptr,"\nProsjek studenata je: %f",suma/n);
+    fclose(fptr);
+    free(a);
+    return 0;
+}
+
+13. Program koji racuna artitmeticku sredinu dinamicki alociranog niza
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+
+int main()
+{
+    int n,i;
+    float suma=0;
+    float *a;
+    printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+    a=malloc(n*sizeof(int));
+    printf("Unesite clonove niza: ");
+    for(i=0;i<n;i++)
+    {
+        scanf("%f",&a[i]);
+        suma=suma+a[i];
+    }
+    printf("\nArtimeticka sredina niza je: %f",suma/n);
+    free(a);
+    return 0;
+}
+
+14. Program koji racuna artitmeticku sredinu dinamicki alociranog niza
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+
+int main()
+{
+    int n,i;
+    float suma=0;
+    float *a;
+    printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+    a=malloc(n*sizeof(int));
+    printf("Unesite clonove niza: ");
+    for(i=0;i<n;i++)
+    {
+        scanf("%f",&a[i]);
+        suma=suma+a[i];
+    }
+    printf("\nArtimeticka sredina niza je: %f",suma/n);
+    free(a);
+    return 0;
+}
+
+15. Napisati program koji spaja 2 unijeta stringa u jedan koristeći se stringom temp , dinamicki alociranim stringom a i realokacijom memorije
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main()
+{
+    int i;
+    char *s,temp[50];
+
+    printf("Unesite string 1: ");
+    scanf("%s",&temp);
+    i=strlen(temp);
+    s=malloc(i*sizeof(char));
+    strcpy(s,temp);
+    printf("Unesite string 2: ");
+    scanf("%s",&temp);
+    i=i+strlen(temp);
+    s=realloc(s,i*sizeof(char));
+    strcat(s,temp);
+    printf("Dobijeni string: %s\n",s);
+    free(s);
+}
+
+16. Korisnik unosi proizvoljan niz brojeva, kreirati dinamički sastavljen samo od brojeva u formatu 3k+1 bez korišćenja pomoćnog niza
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main()
+{
+    int n,i,j=0,*a,k;
+    printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+    printf("Unesite clanove niza: ");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&k);
+        if(k==((k-1)/3)*3+1&&k!=0&&k!=1)
+        {
+            j++;
+            a=realloc(a,j*sizeof(int));
+            a[j-1]=k;
+        }
+    }
+    printf("\nBrojevi u formatu 3k+1: ");
+    for(i=0;i<j;i++)
+        printf("%d ",a[i]);
+}
+
+17. Korisnik unosi niz proizvoljne dužine, kreirati dinamičku niz sastavljen od prostih brojeva bez korišćenja pomoćnog niza
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+int prost(int n)
+{
+    int i=2;
+    while(i<=n/2)
+    {
+         if(n%i==0)
+             return 0;
+         else
+             i++;
+    }
+    if(i==1 || i==0)
+        return 0;
+    return 1;
+
+}
+void main()
+{
+    int n,i,j=0,k,*a;
+    printf("Unesite duzinu niza: ");
+    scanf("%d",&n);
+    printf("Unesite clanove niza: ");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&k);
+        if(prost(k))
+        {
+            j++;
+            a=realloc(a,j*sizeof(int)); //preporuka da za svaki slucaj takodje odradite malloc za svaki slucaj
+            a[j-1]=k;
+        }
+    }
+    printf("\nProsti brojevi su: ");
+    for(i=0;i<j;i++)
+        printf("%d ",a[i]);
+}
+
+18. Iz unijetih stringova u dinamicni niz stringova ubaciti samo riječi koje imaju karakter c
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+void main()
+{
+    int n,i,j,ind,k=0;
+    char **s,c,temp[30];
+    printf("Unesite karakter c: ");
+    scanf("%c",&c);
+    printf("Unesite broj rijeci: ");
+    scanf("%d",&n);
+    s=malloc(n*sizeof(char *));
+    printf("Unesite rijeci: ");
+
+    for(i=0;i<n;i++)
+    {
+        scanf("%s",&temp);
+        j=0;
+        ind=0;
+        while(temp[j]!='\0')
+        {
+            if(temp[j]==c)
+                ind++;
+            j++;
+        }
+        if(ind!=0)
+        {
+            s[k]=(char *)malloc((strlen(temp)+1)*sizeof(char));
+            strcpy(s[k],temp);
+            k++;
+        }
+    }
+    printf("\nRijeci koje sadrze karakter %c su: ",c);
+    for(i=0;i<k;i++)
+        printf("%s ",s[i]);
+    for(i=0;i<j;i++)
+        free(s[i]);
+    free(s);
+}
+Podaci sa komandne linije
+1. Unijeti niz preko komandne linije i koji štampa zbir članova sa parnim/neparnim indeksom
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])  //unose se argumenti ime + argumenti koje zelimo da dodamo
+{
+    int m[50],i=1,j,n,sum1=0,sum2=0;
+
+    while(i<argc)
+    {
+        m[i-1]=atoi(argv[i]); //jer su argumenti tipa string moramo ih pretvoriti u intiger, za to koristimo funkciju atoi
+        i++;
+    }
+    n=i-1;
+    for(i=0;i<n;i++)
+        if(i%2==0)
+            sum1=sum1+m[i];
+        else
+            sum2=sum2+m[i];
+    printf("Suma parnih indeksa je: %d\nSuma neparnih ineksa je: %d",sum1,sum2);
+}
+
+2. Unijeti dva cijela broja preko komandne linije i odštampati sve cijele brojeve između ta dva
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int i,j;
+    if(argc!=3)
+    {
+        printf("Los unos");
+        exit(1);
+    }
+    i=atoi(argv[1]);
+    j=atoi(argv[2]);
+    printf("Brojevi izmedju %d i %d su: ",i,j);
+    for(i=i+1;i<j;i++)
+        printf("%d ",i);
+}
+
+3. Unijeti niz cijelih brojeva preko komandne linije, program racuna sumu unijetih brojeva dok ne naiđe na broj van opsega 1-100
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int sum,i=2,j;
+    j=atoi(argv[1]);
+    sum=j;
+    while(i<argc&&j<=100&&j>=0)
+    {
+        j=atoi(argv[i]);
+        sum=sum+j;
+        i++;
+    }
+    printf("Suma je: %d",sum);
+}
+
+4. Unijeti riječi preko komandne linije, napraviti program da ih sortira i upisuje u novi fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    FILE *fptr;
+    fptr = fopen("novi.txt","w");
+    char a[50][50],temp[50];
+    int sum,i=2,j,n;
+    for(i=1;i<argc;i++)
+        strcpy(a[i-1],argv[i]);//kako bi prekopirali string iz argumenta treba da koristimo strcpy
+    n=i-1;
+    for(int i=0; i<n; i++)
+    {
+        for(int j=0; j<n-1-i; j++){
+            if(strcmp(a[j], a[j+1]) > 0){
+                strcpy(temp, a[j]);
+                strcpy(a[j], a[j+1]);
+                strcpy(a[j+1], temp);
+            }
+        }
+    }
+    for(int i=0; i<n; i++)
+    {
+        fprintf(fptr,"%s ",a[i]);
+    }
+    fclose(fptr);
+}
+
+5. Unijeti niz cijelih brojeva i provjeriti koji od unijetih brojeva su u formatu 3k+1
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int i,j,k;
+    printf("Brojevi u 3k+1 formatu su: ");
+    for(i=1;i<argc;i++)
+        {
+            j=atoi(argv[i]);
+            k=(j-1)/3;
+            if(j==3*k+1&&k!=0)
+                printf("%d ",j);
+        }
+}
+
+6. Unijeti niz cijelih brojeva i pomjeriti sve brojeve za jedno mjesto desno, u slucaju da je zadnja cifra pomjeriti je na prvo mjesto
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(int argc, char *argv[])
+{
+    int i,j,k,n,m;
+    printf("Brojevi sa zamjenjenim ciframa su: ");
+    for(i=1;i<argc;i++)
+        {
+            m=atoi(argv[i]);
+            n=m%10;
+            m=m/10;
+            j=m;
+            k=1;
+            while(j!=0)
+            {
+                j=j/10;
+                k++;
+            }
+            j=pow(10,k);
+            n=n*pow(10,k-1)+m%j+m/pow(10,k);
+            printf("%d ",n);
+        }
+}
+
+Unijeti niz cijelih brojeva i zamjeniti prvu i zadnju cifru svakog(bez obzira na dužinu broja)
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(int argc, char *argv[])
+{
+    int i,j,k,n,m;
+    printf("Brojevi sa zamjenjenim ciframa su: ");
+    for(i=1;i<argc;i++)
+        {
+            m=atoi(argv[i]);
+            n=m%10;
+            m=m/10;
+            j=m;
+            k=1;
+            while(j!=0)
+            {
+                j=j/10;
+                k++;
+            }
+            j=pow(10,k-2);
+            n=n*pow(10,k-1)+(m%j)*10+m/pow(10,k-2);
+            printf("%d ",n);
+        }
+}
+
+Unijeti niz cijelih brojeva i odstampati najveci parni djelilac svakog
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(int argc, char *argv[])
+{
+    int i,j,k,m;
+    printf("Najveci parni djelilac svakog je: ");
+    for(i=1;i<argc;i++)
+        {
+            m=atoi(argv[i]);
+                k=0;
+                j=2;
+                while(j<m/2)
+                {
+                    if(m%j==0)
+                    {
+                        k=j;
+                    }
+                    j=j+2;
+                }
+                if(k==0)
+                    printf("NEMA ");
+                else
+                    printf("%d ",j);
+        }
+}
+
+Unijeti niz cijelih brojeva i odstampati srednju cifru svakog(ako ima paran broj cifara odstampati dvije srednje cifre)
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(int argc, char *argv[])
+{
+    int i,j,k,m;
+    printf("Srednje cifre brojeva su: ");
+    for(i=1;i<argc;i++)
+        {
+            m=atoi(argv[i]);
+            k=m;
+            j=0;
+            while(k!=0)
+            {
+                k=k/10;
+                j++;
+            }
+            if(j%2==0)
+            for(k=0;k<j/2-1;k++)
+                m=m/10;
+            else
+            for(k=0;k<j/2;k++)
+                m=m/10;
+            if(j%2==0)
+                printf("%d ",m%100);
+            else
+                printf("%d ",m%10);
+        }
+}
+
+Unijeti katete trougla i odstampati hipotenuzu, u slucaju da korisnik unese samo jednu racunati da je trougao jednakokraki, u slucaju da unese vise od dvije dati odgovarajuću grešku
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(int argc, char *argv[])
+{
+    float a,b,c;
+    if(argc>3)
+    {
+        printf("Previse unesenih podataka ");
+        exit(1);
+    }
+    if(argc==2)
+    {
+        a=atof(argv[1]);
+        c=sqrt(a*a+a*a);
+        printf("Hipotenuza jednokakrog trougla katete duzine %f je %f ",a,c);
+    }
+    else
+    {
+        a=atof(argv[1]);
+        b=atof(argv[2]);
+        c=sqrt(a*a+b*b);
+        printf("Hipotenuza trougla kateta duzine %f i %f je %f ",a,b,c);
+    }
+}
+
+Unijeti niz cijelih brojeva i odstampati srednji broj(float)
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(int argc, char *argv[])
+{
+    float a=0.0;
+    int i=1;
+    while(i<argc)
+    {
+        a=a+atof(argv[i]); //sad koristimo funkciju atof da bi prebacili argumente u float
+        i++;
+    }
+    printf("Srednji broj je %f",a/(i-1));
+}
+
+Preko komandne linije unijeti riječi i odštampati koliko riječi sadrži slovo 'z' i te riječi unijeti u novi fajl
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int i=1,j,n,ind;
+    char s[50][50];
+    for(i=1;i<argc;i++)
+        strcpy(s[i-1],argv[i]);
+    n=i-1;
+    FILE *fptr;
+    fptr = fopen("novi.txt","w");
+    for(i=0;i<n;i++)
+    {
+        ind=0;
+        j=0;
+        while(s[i][j]!='\0')
+        {
+            if(s[i][j]=='z'||s[i][j]=='Z')
+                ind=1;
+            j++;
+        }
+        if(ind==1)
+        fprintf(fptr,"%s \n",s[i]);
+    }
+    fclose(fptr);
+}
+
+Unijeti niz cijelih brojeva i provjeriti koji su od njih prosti i proste odštampati
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int i=1,j,ind;
+    for(i=1;i<argc;i++)
+    {
+        ind=0;
+        for(j=2;j<atoi(argv[i])/2;j++)
+            if(atoi(argv[i])%j==0)
+            ind=1;
+        if(ind==0)
+            printf("%d ",atoi(argv[i]));
+    }
+}
+
+Unijeti vrijednosti trinoma i odstampati moguca rjesenja(u slucaju da je imaginarno resenje dati obavjestenje)
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main(int argc, char *argv[])
+{
+    float a,b,c;
+    if(argc==4)
+    {
+        a=atof(argv[1]);
+        b=atof(argv[2]);
+        c=atof(argv[3]);
+        if(b*b>4*a*c)
+        {
+            c=sqrt(b*b-4*a*c);
+            printf("Moguci rezultati su:\nx1: %f\nx2: %f\n",(b+c)/2*a,(b-c)/2*a);
+
+        }
+        else if(b*b==4*a*c)
+            printf("Ima jedinstveno rjesenje:\nx2: %f\n",b/2*a);
+        else
+            printf("Imaginarni broj %f %f %f",a,b,c);
+    }
+    else
+        printf("Niste uveli dovoljno promjenljivih");
+    exit(1);
+}
+
+Kao argument komande zadaju se tri parametra – riječ, slovo i broj. Izmjeniti riječ tako da se izmedju dva pojavljivanja zadatog slova ascii vrijednost karaktera promjeni za zadazu brojcanu vrijednost
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int i=0,j=-1,b;
+    char a[50],c;
+    if(argc==4)
+    {
+        b=atoi(argv[3]);
+        strcpy(a,argv[1]);
+        c=argv[2][0];
+        while(a[i]!='\0'&&j==-1)
+        {
+            if(a[i]==c)
+                j=i;
+            i++;
+        }
+        i++;
+        while(a[i]!='\0'&&a[i]!=c)
+            i++;
+        if(a[i]==c)
+            for(j=j+1;j<i;j++)
+            a[j]=a[j]+b;
+        printf("%s ",a);
+    }
+    else
+        printf("Pogresan broj unesenih vrijednosti");
+    exit(1);
+}
+
+Kao argument preko komande linije daje se riječ. Napisati program koji od te riječi ispisuje riječ koja se dobija tako što se prvo slovo ponovi 1 put, drugo 2 puta itd.
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int i=0,j;
+    char a[50];
+
+    if(argc==2)
+    {
+        printf("Dobijena rijec je: ");
+        strcpy(a,argv[1]);
+        while(a[i]!='\0')
+        {
+            for(j=0;j<i+1;j++)
+                printf("%c",a[i]);
+            i++;
+        }
+
+    }
+    else
+        printf("Pogresan broj unesenih vrijednosti");
+    exit(1);
+}
+
+Preko komandne linije se unosti niz cijelih brojeva. Napisati program koji ispituje broj elemenata koji su strogo rastući
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main(int argc, char *argv[])
+{
+    int i,j=0;
+    for(i=1;i<argc-1;i++)
+    if(atoi(argv[i])<atoi(argv[i+1]))
+    j++;
+    printf("Broj strogo rastucih je: %d",j);
+}
+
+18. Koristeci komandnu liniju napraviti niz dinamicki alociranih stringova
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc,char *argv[])
+{
+    int i;
+    char **s;
+    s=malloc(argc*sizeof(char *));
+    for(i=1;i<argc;i++)
+    {
+        s[i-1]=(char*)malloc(strlen(argv[i])*sizeof(char));
+        strcpy(s[i-1],argv[i]);
+    }
+    for(i=0;i<argc-1;i++)
+        printf("%d. %s\n",i+1,s[i]);
+    for(i=0;i<argc-1;i++)
+        free(s[i]);
+    free(s);
+}
+
+19. Unijeti string komandnom linijom za koga ce se dinamicki alocirati memorija i onda realocirati potrebnu memoriju kako bi se na kraj tog stringa nadovezao nov string proizvodne duzine
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc,char *argv[])
+{
+    int i=strlen(argv[1]);
+    char *s,temp[50];
+    s=malloc(i*sizeof(char));
+    strcpy(s,argv[1]);
+    printf("Uneseni string: %s\n",s);
+    printf("Unesite novi string: ");
+    scanf("%s",&temp);
+    i=i+strlen(temp);
+    s=realloc(s,i*sizeof(char));
+    strcat(s,temp);
+    printf("Dobijeni string: %s\n",s);
+    free(s);
+} 
+20. Odstampati proizvoljan broj stringova unijetih preko komandne linije bez dodavanja dodatnih promljenjivih
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+
+int main(int argc,char *argv[])
+{
+    printf("Uneseni stringovi su:");
+    while(argc-->1) //nacin da se while petlja pretvori u kvazi for petlju
+        printf(" %s",*++argv); //moguce je prolaziti kroz niz pokazivaca na ovaj nacin
+    return 0;
+}
+
+21. Odstampati najmanji cijeli broj unijet preko komandne linije korišćenjem samo intigera a
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+int main(int argc,char *argv[])
+{
+    int a;
+    printf("Najmanji broj je");
+    if(atoi(*++argv)>atoi(*++argv+1))
+        a=atoi(*argv+1);
+    else
+        a=atoi(*argv+2);
+    while(argc-->1)
+    {
+        if(a<atoi(*++argv))
+            a=atoi(*argv+1);
+    }
+    printf("Najveci broj je: %d",a);
+    return 0;
+}
+
+22. U komandnu liniju unijeti rijec i iz nje maći sva prazna mjesta, u slucaju da korisnik da pogresan unos odstampati odgovarajuću grešku sa upustvom za unos
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    int i=0,j=0;
+    char s[50];
+    if(argc>2)
+    {
+        printf("Za unos recenice kao argumenta morate je navesti pod znacima navoda");
+        exit(0);
+    }
+    while(argv[1][i]!='\0')
+    {
+        if(argv[1][i]!=' ')
+        {
+            s[j]=argv[1][i];
+            i++;
+            j++;
+        }
+        else
+            i++;
+    }
+    s[j]=argv[1][i];
+    printf("Rijec bez pranina je:\n%s",s);
+}
+
+23. Stringove unešene preko komandne linije promjeniti tako da mala slova postanu velika, a velika mala
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    int i,j;
+    for(i=1;i<argc;i++)
+    {
+        j=0;
+        while(argv[i][j]!='\0')
+        {
+            printf("\ntest ");
+            if(argv[i][j]>='a'&&argv[i][j]<='z')
+                argv[i][j]=toupper(argv[i][j]);
+            else
+                argv[i][j]=tolower(argv[i][j]);
+            j++;
+        }
+    }
+    printf("\nIzmjenjen niz: ");
+    for(i=1;i<argc;i++)
+        printf("%s ",argv[i]);
+}
+24. Provjeriti koliko se neki karakter pojavljuje u zadatim rijecima(prvo unijeti trazeni karakter u komandnu liniju)
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    int i,j,ind=0;
+    for(i=2;i<argc;i++)
+    {
+        j=0;
+        while(argv[i][j]!='\0')
+        {
+            if(argv[i][j]==argv[1][0])
+            {
+                ind++;
+            }
+            j++;
+        }
+    }
+    printf("\nKarakter %c se pojavljuje %d puta",argv[1][0],ind);
+}
+
+25. Upisati sve cifre iz unijetih stringova u dinamički alociran niz
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    int i,j,ind=0;
+    int *a;
+    for(i=2;i<argc;i++)
+    {
+        j=0;
+        while(argv[i][j]!='\0')
+        {
+            if(argv[i][j]>='0'&&argv[i][j]<='9')
+            {
+                ind++;
+                a=realloc(a,ind*sizeof(int));
+                a[ind-1]=argv[i][j];
+            }
+            j++;
+        }
+    }
+    printf("\nCifre koje se pojavljuju: ");
+    for(i=0;i<ind;i++)
+        printf("%d ",a[i]);
+}
+
+26. Odštampati samo slova iz unijetih riječi
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+void main(int argc, char *argv[])
+{
+    int i,j,ind=0;
+    printf("\nSamo slova: ");
+    for(i=1;i<argc;i++)
+    {
+        j=0;
+        while(argv[i][j]!='\0')
+        {
+            if((argv[i][j]>='A'&&argv[i][j]<='Z')||(argv[i][j]>='a'&&argv[i][j]<='z'))
+                printf("%c",argv[i][j]);
+            j++;
+        }
+        printf(" ");
+    }
+}
+27. Provjeriti da li se među brojevima sa komandne linije nalaze bar 2 ista cijela broja
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    int i,j,ind=0;
+    for(i=1;i<argc;i++)
+        for(j=i;i<argc;i++)
+            if(argv[i]==argv[j])
+                    ind=1;
+    if(ind==0)
+        printf("\nNema ");
+    else
+        printf("\nIma ");
+}
+28. Napraviti program koji ispisuje sve argumente koji počinju sa @
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    int i;
+    printf("\nArgumenti koji pocinju sa @ su: ");
+    for(i=1;i<argc;i++)
+    {
+        if(argv[i][0]=='@')
+            printf("%s ",argv[i]);
+    }
+
+}
+29. Napraviti program provjerava koliko prvih karaktera se poklapa kod dva unijeta argumenta
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    int i;
+    while(argv[1][i]==argv[2][i])
+        i++;
+    printf("\nPoklapa se %d karaktera ",i);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+Programski jezik I, DIO A
+Zadaci 1-46
+1. Upisati broj i ispitati je li je prost. Koristi pointere.
+#include <stdio.h>
+void main() {
+int i, brojac=0, a, *pbr, *pa;
+pbr = &brojac;
+pa = &a;
+printf("\nUpisi broj: ");
+scanf("%d", pa);
+for (i = 2; i <= *pa/2; i++)
+if(*pa % i == 0)
+(*pbr)++;
+if (*pa == 1)
+printf("\nBroj jedan nije definisan");
+else
+if (*pbr == 0)
+printf("\nBroj je prost!");
+else
+printf("\nBroj nije prost");
+return;
+}
+2. Upisati tri broja i ispisati najveći koristeći pointere!
+#include <stdio.h>
+void main() {
+int a, b, c, max, *pa, *pb, *pc, *pmax;
+pa = &a;
+pb = &b;
+pc = &c;
+pmax = &max;
+printf("\nUpisi tri broja: ");
+scanf("%d %d %d", pa, pb, pc);
+*pmax = *pa;
+if (*pb > *pmax)
+*pmax = *pb;
+if (*pc > *pmax)
+*pmax = *pc;
+printf("\nNajveci broj je %d", *pmax);
+return;
+}
+3. Upisati 10 brojeva. Ispisati koliko je upisano parnih brojeva djeljivih s 5, a koliko
+neparnih djeljivih s 3 koristeći pointere!
+#include <stdio.h>
+void main() {
+int i, br, parnih=0, neparnih=0, *pbr, *pparn, *pnepar;
+pbr = &br;
+pparn = &parnih;
+pnepar = &neparnih;
+for (i = 0; i < 10; i++) {
+printf("\nUpisi %d. broj:", i+1);
+scanf("%d", pbr);
+if (*pbr % 2 == 0 && *pbr % 5 == 0)
+(*pparn)++;
+if (*pbr % 2 == 1 && *pbr % 3 == 0)
+(*pnepar)++;
+}
+printf("\nParnih djeljivih s 5 = %d", *pparn);
+printf("\nNeparnih djeljivih s 3 = %d", *pnepar);
+return;
+}
+4. Učitati string koji sadrži manje od 50 karaktera i sva mala slova u tom stringu
+konvertovati u velika, a ostale karaktere ne mijenjati.
+#include<stdio.h>
+int main()
+{
+char niz[50];
+int i=0;
+puts("Unesi neku rijec");
+gets(niz);
+while(niz[i]!='\0')
+{
+ if (niz[i]>='a'&&niz[i]<='z')
+ niz[i]+='A'-'a';
+ i++;
+}
+printf("Izmijenjeni string je: %s",niz);
+}
+5. Učitati evidenciju o nekoliko lica (ime, dužine manje od 15 karaktera, i ulog), a zatim
+štampati imena svih onih koji imaju ulog veći od prosječnog.
+#include<stdio.h>
+int main()
+{
+char imena[20][15];
+float ulog[20],prosjek=0.0;
+int i,a;
+printf("Ucitaj broj imena: ");
+scanf("%d",&a);
+printf("Ucitaj imena lica i njihov ulog: ");
+for(i=0;i<a;i++)
+{
+ scanf("%s%f",imena[i],&ulog[i]);
+ prosjek+=ulog[i];
+}
+prosjek/=a;
+puts("Ulog veci od prosjeka imaju:");
+for(i=0;i<a;i++)
+ if(ulog[i]>prosjek)
+ printf("%s\t\t%6.2f\n",imena[i],ulog[i]);
+}
+6. Napisati program koji za unijeti prirodni broj računa sumu i proizvod svih prirodnih
+brojeva koji su manji od ili jednaki tom broju.
+#include<stdio.h>
+int main()
+{
+int a,i=1,sum=0;
+long int prod=1;
+puts("Unesi neki prirodni broj");
+scanf("%d",&a);
+while(i<=a)
+{
+ sum+=i;
+ prod*=i;
+ i++;
+}
+printf("Suma prirodnih brojeva do broja %d je: %d\n",a,sum);
+printf("Proizvod prirodnih brojeva do broja %d je: %ld\n",a,prod);
+}
+7. Napisati program koji računa srednju vrijednost niza cijelih brojeva.
+#include<stdio.h>
+int main()
+{
+int i,N,x[50];
+float mean=0.0;
+printf("Unesi broj clanova niza\n");
+scanf("%d",&N);
+printf("Unesi clanove niza\n");
+for(i=0;i<N;i++)
+ scanf("%d",x+i);
+for(i=0;i<N;i++)
+ mean+=(float)x[i]/N;
+printf("Srednja vrijednost niza je: \t %f \n",mean);
+}
+8. Napisati program koji provjerava da li je učitani prirodan broj N Hamming-ov broj.
+Prirodan broj je Hamming-ov ukoliko su mu jedini prosti činioci 2, 3 ili 5.
+#include<stdio.h>
+int main()
+{
+int N;
+printf("Unijeti prirodan broj: ");
+scanf("%d",&N);
+while(N%2==0)
+ N/=2;
+while(N%3==0)
+ N/=3;
+while(N%5==0)
+ N/=5;
+if(N==1)
+ printf("Broj je Hamming-ov");
+else
+ printf("Broj nije Hamming-ov");
+}
+9. Napisati program koji će za unesen prirodan broj štampati sve proste brojeve koji su
+manji od zadatog broja. Program treba da sadrži funkciju koja određuje da li je broj, koji
+joj se prosljeđuje kao argument, prost.
+#include<stdio.h>
+int prost(int);
+int main()
+{
+int i,n;
+printf("Unesi broj:\n");
+scanf("%d",&n);
+printf("Prosti brojevi su:\n");
+for(i=1;i<n;i++)
+ if(prost(i))
+ printf("%d ",i);
+printf("\n");
+}
+int prost(int n)
+{
+int i;
+for(i=2;i*i<=n;i++)
+ if(n%i==0)
+ return 0;
+return 1;
+}
+10. Napisati funkciju koja broji koliko se početnih karaktera dva stringa, koji su joj
+argumenti, poklapa.
+#include<stdio.h>
+int poklapanje(char *,char *);
+int main()
+{
+char prvi[30],drugi[20];
+puts("Unesi stringove");
+gets(prvi);
+gets(drugi);
+printf("Poklapa se %d karaktera",poklapanje(prvi,drugi));
+}
+int poklapanje(char *str1,char *str2)
+{
+int broj=0;
+while(str1[broj]==str2[broj]&&str1[broj]&&str2[broj])
+ broj++;
+return broj;
+}
+11. Napisati program kojim se unosi niz cijelih brojeva, od maksimalno 20 elemenata, i
+racuna i stampa njegov maksimalni i minimalni element.
+#include<stdio.h>
+int main()
+{
+int a[20],min,max,i,N;
+printf("Unesi broj clanova niza\n");
+scanf("%d",&N);
+printf("Unesi clanove niza\n");
+for(i=0;i<N;i++)
+ scanf("%d",a+i);
+max=min=a[0];
+for(i=1;i<N;i++)
+ if(a[i]>max)
+ max=a[i];
+ else if(a[i]<min)
+ min=a[i];
+printf("Minimum niza je: %d\nMaksimum niza je: %d ",min,max);
+}
+12. Napisati program koji formira podniz niza cijelih brojeva koji se sastoji od onih
+elemenata koji su veći od zadatog cijelog broja.
+#include<stdio.h>
+#define MAX 20
+int main()
+{
+int N,k=0,i,a[MAX],b[MAX],C;
+printf("Unesi broj clanova niza: ");
+scanf("%d",&N);
+printf("Unesi cijeli broj: ");
+scanf("%d",&C);
+printf("Unesi clanove niza: ");
+for(i=0;i<N;i++)
+{
+ scanf("%d",a+i);
+ if(a[i]>C)
+ b[k++]=a[i];
+}
+if(k>0)
+{
+ printf("Elementi niza veci od datog cijelog broja su:\n");
+ for(i=0;i<k;i++)
+ printf("%d ",b[i]);
+}
+}
+13. Učitava se nekoliko riječi, pri čemu je dužina riječi manja od 11 karaktera, a zatim se
+štampa koliko ima tu različitih riječi.
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+char rijeci[20][11];
+int i,j,brRijeci,razl=0,uslov;
+printf("Koliko rijeci zelite da unesete?\n");
+scanf("%d",&brRijeci);
+for(i=0;i<brRijeci;i++)
+ scanf("%s",rijeci[i]);
+for(i=0;i<brRijeci-1;i++)
+{
+ uslov=1;
+ for(j=i+1;j<brRijeci;j++)
+ if(strcmp(rijeci[i],rijeci[j])==0)
+ uslov=0;
+ razl+=uslov;
+}
+printf("Ima %d razlicitih rijeci",razl);
+}
+14. Napisati funkciju ukloniKarakter za uklanjanje svake pojave zadatog karaktera iz stringa.
+Pored pokazivača na string, argument funkcije je karakter kog treba ukloniti. Funkcija
+vraća broj uklonjenih karaktera.
+#include<stdio.h>
+int ukloniKarakter(char *,char);
+int main()
+{
+char kar,s[50];
+int b;
+puts("Unijeti karakter");
+scanf("%c",&kar);
+puts("Unesi string");
+scanf("%s",s);
+b=ukloniKarakter(s,kar);
+printf("String je %s",s);
+printf(", a broj uklonjenih karaktera %c je %d\n",kar,b);
+}
+int ukloniKarakter(char *str,char kar)
+{
+int elim=0,i=0,j=0;
+while(str[i]!='\0')
+{
+ if(str[i]!=kar)
+ str[j++]=str[i];
+ else
+ elim++;
+ i++;
+}
+str[j]='\0';
+return elim;
+}
+15. Napisati program koji za unijeti prirodni broj računa i štampa zbir njegovih cifara.
+#include<stdio.h>
+int main()
+{
+int s=0,N;
+printf("Unesi prirodan broj\n");
+scanf("%d",&N);
+while(N!=0)
+{
+ s+=N%10;
+ N/=10;
+}
+printf("Suma cifara prirodnog broja je: %d\n",s>0?s:-s);
+}
+16. Upisati ime i prezime te opšti uspjeh učenika. Nakon toga ispisati upisane podatke.
+#include <stdio.h>
+void main()
+{
+struct ucenik
+{
+char ime[20];
+char prezime[20];
+int uspjeh;
+} uc;
+printf("\n Ucitaj ime učenika: ");
+scanf("%s", uc.ime);
+printf("\n Ucitaj prezime učenika: ");
+scanf("%s", uc.prezime);
+printf("\n Ucitaj opsti uspjeh: ");
+scanf("%d", &uc.uspjeh);
+printf("\n Ime ucenika je %s", uc.ime);
+printf("\n Prezime učenika je %s", uc.prezime);
+printf("\n Opsti uspjeh je %d", uc.uspjeh);
+ return;
+}
+17. Upisati ime, prezime te opšti uspjeh za 2 učenika. Ispisati ime i prezime učenika koji ima
+bolji uspjeh.
+#include <stdio.h>
+void main()
+{
+struct ucenik
+{
+char ime[20];
+char prezime[20];
+int uspjeh;
+} uc1, uc2;
+printf("\n Učitaj ime 1. učenika: ");
+scanf("%s", uc1.ime);
+printf("\n Učitaj prezime 1. učenika: ");
+scanf("%s", uc1.prezime);
+printf("\n Učitaj opsti uspjeh 1. učenika: ");
+scanf("%d", &uc1.uspjeh);
+printf("\n Učitaj ime 2. učenika: ");
+scanf("%s", uc2.ime);
+printf("\n Učitaj prezime 2. učenika: ");
+scanf("%s", uc2.prezime);
+printf("\n Učitaj opsti uspjeh 2. učenika: ");
+scanf("%d", &uc2.uspjeh);
+if (uc1.uspjeh > uc2.uspjeh) {
+printf("\n Ime učenika je %s", uc1.ime);
+printf("\n Prezime učenika je %s", uc1.prezime);
+printf("\n Opsti uspjeh %d", uc1.uspjeh);
+}
+else if (uc2.uspjeh > uc1.uspjeh) {
+printf("\n Ime učenika je %s", uc2.ime);
+printf("\n Prezime učenika je %s", uc2.prezime);
+printf("\n Opsti uspjeh %d", uc2.uspjeh);
+}
+else
+printf("\n Oba učenika isti opsti uspjeh %d", uc1.uspjeh);
+ return;
+}
+18. Upisati vrijednost dvije varijable i sabrati ih. Ispisati vrijednost varijabli i njihovog zbira te
+vrijednosti adresa svih korištenih varijabli.
+#include <stdio.h>
+void main() {
+int a, b, c, *pa, *pb, *pc;
+pa = &a;
+pb = &b;
+pc = &c;
+printf("\nUpiši dva broja");
+scanf("%d %d", pa, pb);
+*pc = *pa + *pb;
+printf("\na = %d adresa je %x", *pa, pa);
+printf("\nb = %d adresa je %x", *pb, pb);
+printf("\nc = a+b = %d adresa je %x", *pc, pc);
+return;
+}
+19. Upisati broj i pomocu pokazivača ispitati da li je prost.
+#include <stdio.h>
+void main() {
+int i, brojac=0, a, *pbr, *pa;
+pbr = &brojac;
+pa = &a;
+printf("\nUpiši broj: ");
+scanf("%d", pa);
+for (i = 2; i <= *pa/2; i++)
+if(*pa % i == 0)
+(*pbr)++;
+if (*pa == 1)
+printf("\nBroj jedan nije definiran");
+else
+if (*pbr == 0)
+printf("\nBroj je prost!");
+else
+printf("\nBroj nije prost");
+return;
+}
+20. Učitati tri broja. U funkciji pronaći i ispisati najveći od ta tri broja.
+#include <stdio.h>
+void maksimum(int x, int y, int z) {
+int max;
+max=x;
+if(y > max)
+max=y;
+if(z > max)
+max=z;
+printf("\nNajveći broj je %d.", max);
+return;
+}
+void main() {
+int a, b, c, m;
+printf("\nUpiši tri broja: ");
+scanf("%d %d %d", &a, &b, &c);
+maksimum(a,b,c);
+return;
+}
+21. Učitati 5 znakova. Za svaki znak u funkciji ispisati njegov ASCII kod.
+#include <stdio.h>
+void ascii(char x) {
+int asc;
+asc = x;
+printf("\nAscii kod znaka %c je %d", x, asc);
+return;
+}
+void main() {
+int i;
+char znak;
+for (i=1; i<=5; i++) {
+printf("\nUnesi %d. znak: ", i);
+scanf(" %c", &znak);
+ascii(znak);
+}
+return;
+}
+22. Učitati rečenicu. Ispisati njenu dužinu ne koristeći funkciju strlen.
+#include <stdio.h>
+#include <string.h>
+void main() {
+char a[100], *pa;
+int i;
+pa = &a[0];
+printf("\nUpiši rečenicu: ");
+gets(a);
+i = 0;
+while (*(pa + i) != '\0')
+i++;
+printf("\nDuzina rečenice je %d", i);
+return;
+}
+23. Učitati rečenicu maksimalne duzine 100 znakova. Ispisati koliko se puta pojavilo veliko slovo
+u rečenici.
+#include <stdio.h>
+#include <string.h>
+void main() {
+char a[100], *pa;
+int i, n, velika=0;
+pa = &a[0];
+printf("\nUpiši rečenicu: ");
+gets(a);
+n = strlen(a);
+for (i = 0; i < n; i++)
+if (*(pa + i) >= 'A' && *(pa + i) <= 'Z')
+velika++;
+printf("\nBroj velikih slova je %d", velika);
+return;
+}
+24. Učitati rečenicu i izbrojati koliko brojeva ima u rečenici.
+#include <stdio.h>
+#include <string.h>
+void main() {
+ char rec[200];
+ int i, n, brojac = 0, log = 0;
+ printf("\n Upišite rečenicu");
+ gets(rec);
+ n = strlen(rec);
+ for (i = 0; i < n; i++) {
+ if (rec[i] >= '0' && rec[i] <= '9' && log == 0) {
+ brojac++;
+ log = 1;
+ }
+ if (rec[i] < '0' || rec[i] >'9')
+ log = 0;
+ }
+ printf("\n U rečenici ima %d brojeva", brojac);
+ return;
+}
+25. Učitati riječ. Ako je prvo slovo riječi veliko ili malo slovo 's' ispisati riječ s razmacima između
+slova, u suprotnom ispisati svako slovo u novi red.
+#include <stdio.h>
+#include <string.h>
+void main(){
+ char r[100];
+ int i, n;
+ printf("\nUčitaj riječ:");
+ scanf("%s", &r[0]);
+ n=strlen(r);
+ for(i=0; i<n; i++)
+ if(r[0]=='s' || r[0]=='S')
+ printf("%c ", r[i]);
+ else
+ printf("\n%c", r[i]);
+ return;
+}
+26. Učitati 8 znakova u polje, jedan po jedan. Koliko je među učitanim znakovima znakova
+brojeva ('0' do '9').
+#include <stdio.h>
+void main() {
+ char r[8];
+ int i, brojac=0;
+ for(i=0; i<8; i++) {
+ printf("Učitaj %d. znak:", i+1);
+ scanf(" %c", &r[i]);
+ }
+ for(i=0; i<8; i++)
+ if(r[i]>='0' && r[i]<='9')
+ brojac++;
+
+ printf("\nUpisanih znakova brojeva ima %d", brojac);
+ return;
+}
+27. Učitati 10 brojeva u polje i sabrati parne brojeve koristeći pokazivače.
+#include <stdio.h>
+void main() {
+int a[10], i, zbir = 0, *pa;
+pa = &a[0];
+for (i = 0; i < 10; i++) {
+printf("\nUčitaj %d broj", i + 1);
+scanf("%d", pa + i);
+}
+for (i = 0; i < 10; i++) {
+if (*(pa + i) % 2 == 0)
+zbir += *(pa + i);
+}
+printf("\Zbir parnih brojeva je %d", zbir);
+return;
+}
+28. Ispis prirodnih brojeve od 3 do 8 unazad.
+#include <stdio.h>
+int main ()
+{
+ int i=8;
+ do
+ {
+ printf("%d\n", i);
+ i--;
+ }while (i>=3);
+ return 0;
+}
+29. Napisati program koji ispisuje u prvom redu jedno ime a zatim u svakom narednom po
+jedno ime više.
+#include <stdio.h>
+int main()
+{
+ int i, j;
+ i = 1;
+ do {
+ j = 1;
+ do {
+ if (j <= i)
+ printf("IME ");
+ j++;
+ } while (j <= 3);
+ printf("\n");
+ i++;
+ } while (i <= 3);
+ return 0;
+}
+30. Napisati program za ispis dvostruke vrijednosti prvih n prirodnih brojeva.
+#include <stdio.h>
+int main ()
+{
+ int i=1, n;
+ printf("Do broja: ");
+ scanf("%d", &n);
+ while (i<=n)
+ {
+ printf("%d\n", 2*i);
+ i++;
+ }
+ return 0;
+}
+31. Napisati program za određivanje parnosti broja.
+#include <math.h>
+#include <stdio.h>
+int main ()
+{
+ int x;
+ printf("Unesite variablu x ");
+ scanf("%d", &x);
+ if (x%2==0)
+ printf("Broj je paran! \n");
+ else
+ printf("Broj nije paran! \n");
+
+ return 0;
+}
+32. Učitati trocifreni cijeli broj. Ispremještati mu cifre tako da se dobije najveći mogući broj
+sastavljen od te tri cifre. Npr. 476 ==> 764.
+#include <stdio.h>
+int main()
+{
+ int broj, j, d, s, t, rezultat;
+ printf("Trocifren broj: ");
+ scanf("%d",&broj);
+ while (broj < 100 || broj > 999) {
+ printf("Broj mora biti trocifren. Ponovi unos: ");
+ scanf("%d",&broj);
+ }
+ j = broj % 10;
+ d = (broj / 10);
+ d = d % 10;
+ s = broj / 100;
+ if (j > d) {
+ t = j;
+ j = d;
+ d = t;
+ }
+ if (j > s) {
+ int t = j;
+ j = s;
+ s = t;
+ }
+ if (d > s) {
+ t = d;
+ d = s;
+ s = t;
+ }
+ rezultat = s * 100 + d * 10 + j;
+ printf("Rezultat: %d", rezultat);
+ return 0;
+}
+33. Učitati 2 razlicita cijela broja. Ako su oba parna podijeliti veći sa manjim brojem. Ako su oba
+neparna od većeg oduzeti manji broj. Inače sabrati ta dva broja.
+#include <stdio.h>
+int main()
+{
+ int a, b;
+ printf("Ucitati dva razlicita cijela broja trougla \n");
+ printf("Prvi broj: ");
+ scanf("%d",&a);
+ printf("Drugi broj: ");
+ scanf("%d",&b);
+ while (a == b) {
+ printf("Brojevi moraju biti razliciti. Ponovi unos: ");
+ scanf("%d",&b);
+ }
+ if (a%2==0 && b%2==0) // provjera paranosti oba broja
+ if (a>b) // da li je prvi veci
+ printf("Oba parna: %d / %d = %f", a, b, (double)a / (double)b);
+ else
+ printf("Oba parna: %d / %d = %f", b, a, (double)b / (double)a);
+ else if (a%2!=0 && b%2!=0) // provjera neparnosti brojeva
+ if (a>b) // da li je prvi veci
+ printf("Oba neparna: %d - %d = %d", a, b, a-b);
+ else
+ printf("Oba meparna: %d - %d = %d", b, a, b-a);
+ else // inace nisu ni parni ni neparni
+ printf("Paran i neparan: %d * %d = %d", a, b, a+b);
+ return 0;
+}
+34. Napisati program za prebrojavanje parnih brojeva od k do n.
+#include <stdio.h>
+int main ()
+{
+ Int I, k,n,br=0;
+ printf("Od broja: ");
+ scanf ("%d", &k);
+ printf("Do broja: ");
+ scanf ("%d", &n);
+
+ for (i=k; i <= n; ++i)
+ {
+ if (i%2 == 0)
+ br++;
+ }
+ printf("Parnih brojeva u datom intervalu ima: %d", br);
+ return 0;
+}
+35. Učitati članove niza. Izračunati i ispisati proizvod članova niza sa parnim indeksom.
+#include <stdio.h>
+int main()
+{
+ int i, p, n;
+ printf("Unesi broj elemenata niza: ");
+ scanf("%d", &n);
+ int niz[n]; // rezervisanje prostora za niz - ARRAY
+ for ( i = 0; i < n; i++ ) {
+ scanf ("%d", &niz[i]); // ulaz clanova niza
+ }
+ p = 1; // pocetna vrijednsot proizvoda
+ for ( i = 0; i < n; i+=2 )
+ {
+ p = p * niz[i];
+ }
+ printf("\nProizvod clanova niza = %d", p);
+ return 0;
+}
+36. Učitati članove niza. Izračunati i ispisati broj parnih i neparnih članova niza odvojeno.
+#include <stdio.h>
+int main()
+{
+ int i,n,parni=0,neparni=0;
+ printf("Unesi broj elemenata niza: ");
+ scanf("%d", &n);
+ int iNiz[n];
+ printf("Unesi elemente niza: \n");
+ for(i=0; i < n; i++)
+ {
+ scanf("%d", &iNiz[i]);
+ if (iNiz[i] % 2 == 0)
+ {
+ parni+=1 ;
+ }
+ else if (iNiz[i] % 2 != 0)
+ neparni+=1;
+ }
+ printf("broj parnih ");
+ printf("%d", parni);
+ printf("\nbroj neparnih ");
+ printf("%d", neparni);
+ return 0;
+}
+37.Učitati 2 cijela broja i izračunati im zbir, razliku, proizvod i količnik. Ispisati one rezultate koji
+su trocifreni.
+#include <stdio.h>
+int main ()
+{
+ int a, b, razlika, zbir;
+ double proizvod, kolicnik;
+ printf("Prvi broj: ");
+ scanf("%d",&a);
+ printf("Drugi broj ");
+ scanf("%d",&b);
+ proizvod = a * b;
+ razlika = a - b;
+ zbir = a + b;
+if (zbir > 99 && zbir < 1000)
+ printf("Zbir = %d \n", zbir);
+ if (razlika > 99 && razlika < 1000)
+ printf("Razlika = %d \n", razlika);
+ if (proizvod > 99 && proizvod < 1000)
+ printf("Proizvod = %f \n", proizvod);
+ if (b != 0)
+ {
+ kolicnik = (double)a / b;
+ if (kolicnik > 99 && kolicnik < 1000)
+ printf("Kolicnik = %f \n", kolicnik);
+ }
+ else
+ printf("Nije moguce dijeliti sa 0");
+ return 0;
+}
+38.Ucitati niz pa ispisati prvo negativne, pa ostale članove niza. Ispisati članove niza tek poslije
+sortiranja.
+#include <stdio.h>
+int main()
+{
+ int n;
+ int i;
+ printf("Unesi broj elemenata niza: ");
+ scanf("%d", &n);
+ int A[n];
+ printf("\nUnesi elemente: \n");
+ for(i=0; i < n; i++)
+ {
+ scanf("%d", &A[i]);
+ }
+ int j;
+ int iTemp;
+ for(i=0; i < n-1; i++)
+ {
+ for(j=i+1; j < n; j++)
+ {
+ if(A[j] < 0)
+ {
+ iTemp=A[j];
+ A[j]=A[i];
+ A[i]=iTemp;
+ }
+ }
+ }
+ printf("\nIspis niza, prvo negativni:\n");
+ for(i=0; i < n;i++)
+ {
+ printf("%d ", A[i]);
+ }
+ return 0;
+}
+39.Učitati i ispisati dvodimenzionalni niz - matricu nxn. Zatim ispisati članove niza koji su na
+glavnoj dijagonali.
+#include <stdio.h>
+int main()
+{
+ printf("Unesite dimenzije kvadratne matrice:\n");
+ int i;
+ int j;
+ int n;
+
+ scanf("%d", &n);
+ int iMatrica[n][n];
+ printf("Unesite elemente matrice: \n");
+ for(i=0; i < n; i++) {
+ for(j=0; j < n; j++) {
+ scanf("%d", &iMatrica[i][j]);
+ }
+ }
+
+ printf("\nIspis matrice:\n");
+ for(i=0; i < n; i++) {
+ for(j=0; j < n; j++) {
+ if(i==j) {
+ printf("%d ", iMatrica[i][j]);
+ }
+ }
+ printf("\n");
+ }
+ return 0;
+}
+40.Napisati funkciju koja izračunava faktorijel datog broja.
+#include<stdio.h>
+int faktorijel(int broj)
+{
+int i, fakt=1;
+for(i=1; i<=broj; i++)
+fakt *= i;
+printf("faktorijel broja %d je %d",broj ,fakt);
+}
+int main() {
+ int a;
+ printf("Unesi broj: ");
+ scanf("%d", &a);
+ faktorijel(a);
+}
+41.Učitati niz karaktera sa tastature i odrediti mu dužinu.
+#include<stdio.h>
+int main() {
+char niz[10];
+printf("Unesi rijec: ");
+scanf("%s", &niz);
+int i, duzina = 0;
+for(i=0; niz[i] != '\0'; i++)
+duzina++;
+printf("%d", duzina);
+}
+42. Ucitati niz I proveriti da li on sadzi slovo.
+#include <stdio.h>
+#include <string.h>
+void main() {
+ char r[100];
+ int i=0, brojac=0, n;
+ printf("\nUčitaj riječ:");
+ scanf("%s", &r[0]);
+ n = strlen(r);
+ for (i=0; i<n; i++)
+ if(r[i]=='z' || r[i]=='Z')
+ brojac++;
+ printf("\nRiječ %s sadrži %d puta slovo \'z\'", r, brojac);
+ return;
+}
+43. Napisati rekurzivnu funkciju koja računa sumu cifara datog cijelog broja n.
+#include <stdio.h>
+int suma_cifara(int n) {
+ if(n < 10) return n;
+ return n%10 + suma_cifara(n / 10);
+}
+int main (){
+ printf("Suma cifara datog broja - Rekurzija\n");
+ int broj_n, s;
+ printf("Broj: ");
+ scanf("%d",&broj_n);
+ s = suma_cifara(broj_n);
+ printf("Dati broj %d ima sumu cifara %d ", broj_n, s);
+ return 0;
+}
+44. Napisati rekurzivnu funkciju za računanje sume prvih 5 brojeva.
+#include <stdio.h>
+int suma(int n) {
+ if(n <= 1)
+ return 1;
+ return n + suma(n-1);
+}
+int main (){
+ printf("Suma prvih 5 brojeva . Rekurzija\n");
+ int s;
+ s = suma(5);
+ printf("Suma brojeva od 1 do 5 = %d", s);
+ return 0;
+}
+45. Sa tastature ucitati string i na unijeti string dodati karaktere K,R,A,J.
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+ char str[50];
+char ch1= 'K' ;
+char ch2= 'R' ;
+char ch3= 'A' ;
+char ch4= 'J';
+printf("Prvobitni string: ");
+scanf("%s",str);
+ strncat(str, &ch1, 1);
+strncat(str, &ch2, 1);
+strncat(str, &ch3, 1);
+strncat(str, &ch4, 1);
+ printf("Novi string: %s\n", str);
+ return 0;
+}
+46.Napraviti program koji stampa piramidu koristeci karakter ‘*’.
+#include <stdio.h>
+int main()
+{
+ int i, j, visina;
+ printf("Ucitati visinu piramide : \n");
+ scanf("%d", &visina);
+ for (i = 1; i <= visina; i++) {
+ for (j = i; j < visina; j++) {
+ printf(" ");
+ }
+ for (j = 1; j <= (2 * i - 1); j++) {
+ printf("*");
+ }
+ printf("\n");
+ }
+ return 0;
+}
+
+47. Kreirati funkciju poredjenje koja poredi elemente u nizu i vraća niz sortiran u opadajućem
+redosljedu (od najvećeg ka najmanjem). U glavnoj funkciji kreirati niz brojeva {1, 6, 3, 5, 8} i
+štampati sortirani niz koristeći funkciju poredjenje.
+void poredjenje(int a[],int n)
+{
+ int temp,i,j;
+for (i=0;i<n;i++)
+for(j=n-1;j>i;j--){
+if (a[i]<a[j]){
+ temp=a[i];
+ a[i]=a[j];
+ a[j]=temp;}}
+for (i=0;i<5;i++)
+ printf("%d",a[i]);
+}
+int main()
+{
+int i,n,a[5];
+printf("Unesi broj elemenata");
+scanf("%d\n",&n);
+printf("Unesi elemente niza");
+for (i=0;i<n;i++)
+scanf("%d\n",&a[i]);
+poredjenje(a,n);
+}
+48. Kreirati program koji sadrži funkciju koja izračunava najveći zajednički djelilac dva cijela
+broja (NZD) koristeći Euklidov algoritam(oduzimati manji broj od veceg dok se jedan ne svede
+na 0) i rekurziju.
+Napomena:U matematici, najveći zajednički djelilac (NZD) dva cijela broja je najveći pozitivan
+cijeli broj koji dijeli oba broja bez ostatka.
+#include <stdio.h>
+int nzd(int a, int b)
+{
+ if (a == 0)
+ return b;
+ if (b == 0)
+ return a;
+ if (a > b)
+ return nzd(a - b, b);
+ else
+ return nzd(a, b - a);}
+int main() {
+ int a = 105, b = 252;
+ printf("NZD(%d, %d) = %d\n", a, b, nzd(a, b));}
+49. Kreirati program koji definiše niz cijelih brojeva X i koji vrši oduzimanje elemenata tog niza
+korišćenjem pomoćne pokazivačke promjenljive.
+Prilagoditi program tako da eventualna izmjena broja elemenata niza u njegovoj inicijalizaciji ne
+zahtijeva intervenciju na programu.
+#include<stdio.h>
+int main()
+{
+int X[]={-3,4,2,7,11,-2};
+int *p, i, razlika=X[0];
+for(i=1; i < sizeof(X)/sizeof(X[0]); i++)
+{
+p=&(X[i]);
+razlika-=*p;
+}
+printf("Dobijena razlika je: %d\n",razlika);
+}
+50. Kreirati funkciju mnozenje koja daje rezultat mnozenja 2 realna broja koristeći simulaciju
+predavanja argumenata funkcije po referenci. U glavnoj funkciji unijeti 2 realna broja i ispisati
+njihov proizvod korišćenjem funkcije mnozenje.
+#include <stdio.h>
+float mnozenje(float x,float y,float *z)
+{
+*z=x*y;
+return *z;
+}
+main()
+{
+float a=10.25,b=20.50,c=1.00;
+printf("\nProizvod brojeva a=%f i b=%f je %f",a,b,mnozenje(a,b,&c));
+}
+51. Učitati string dužine n karaktera i ispisati njegovu dužinu. Na početak tog stringa dodati
+string “POCETAK”, a kraj tog stringa dodati string „ZAVRSETAK“.
+#include <stdio.h>
+main()
+{
+char str[20],p[20]={"pocetak"};
+printf("Unesite string: ");
+gets(str);
+printf("\n\nUnijeli ste string <%s> ciji je broj elemenata %d: ",str,strlen(str));
+strcat(p,str);
+strcat(p,"zavrsetak");
+puts("\nSadrzaj stringa je: ");
+puts(p);
+}
+52. Napraviti program koji stampa piramidu koristeci karakter ‘*’
+#include <stdio.h>
+int main()
+{
+ int i, j, visina;
+ printf("Ucitati visinu piramide : ");
+ scanf("%d", &visina);
+ for (i = 1; i <= visina; i++) {
+ for (j = i; j < visina; j++) {
+ printf(" ");
+ }
+ for (j = 1; j <= (2 * i - 1); j++) {
+ printf("*");
+ }
+ printf("\n");
+ }
+return 0;
+}
+53. Napisati program koji ce učitati string od 10 karaktera, a na ekranu ispisati samo one karaktere
+koji predstavljaju velika slova..Na početni string nadovezati novi string od 5 karaktera i prikazati
+novi string.
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+char str[15];
+int i;
+printf("Unesite string:\n");
+gets(str);
+for(i=0;i<10;i++) {
+if(str[i]>='A' && str[i]<='Z') {
+printf("%c\n",str[i]);
+}
+}
+char c[5];
+c[0]='1';
+c[1]='2';
+c[2]='3';
+c[3]='4';
+c[4]='5';
+int j=0;
+for(i=10;i<15;i++) {
+str[i]=c[j++];
+}
+str[15]='\0';
+puts(str);
+}
+54. Napisati program koji ce učitati string od 20 karaktera, a na ekranu ispisati samo prvu riječ iz
+stringa.
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+int i;
+i=0;
+char str[20];
+printf("Unesite string: ");
+fgets(str,20,stdin);
+for(i=0;i<20;i++)
+if(str[i]==' ')
+str[i]=0;
+printf("Prva rijec iz stringa je: %s",str);
+}
+55. Napisati program sa funkcijom za izračunavanje sume kvadrata dva cijela broja.
+#include <stdio.h>
+#include <stdlib.h>
+int sumakv(int a, int b) {
+ int sumakv;
+ sumakv = a * a + b * b;
+ return sumakv;
+}
+int main() {
+printf("Suma kvadrata dva broja\n");
+ int broj1, broj2, s;
+ printf("Prvi broj: ");
+ scanf("%d",&broj1);
+ printf("Drugi broj: ");
+ scanf("%d",&broj2);
+ s = sumakv(broj1, broj2);
+ printf("%d * %d + %d * %d = %d ", broj1, broj1, broj2, broj2, s);
+}
+56. Napisati program sa funkcijom za određivanje najmanjeg od 3 broja.
+#include <stdio.h>
+#include <stdlib.h>
+int najmanji(int a, int b, int c) {
+ int min;
+ min = a;
+ if(b < min)
+ min = b;
+ if(c < min)
+ min = c;
+ return min;
+}
+int main ()
+{
+ printf("Najmanji od tri broja\n");
+ int broj1, broj2, broj3, najm;
+ printf("Tri broja: ");
+ scanf("%d %d %d", &broj1, &broj2, &broj3);
+ najm = najmanji(broj1, broj2, broj3);
+ printf("Od brojeva: %d %d %d ", broj1, broj2, broj3);
+ printf("\nNajmanji je: %d ", najm);
+ return 0;
+}
+57. Napisati program za sortiranje niza preko pointera.
+#include <stdio.h>
+void sort(int n, int* ptr)
+{
+ int i, j, t;
+ for (i = 0; i < n; i++) {
+ for (j = i + 1; j < n; j++) {
+ if (*(ptr + j) < *(ptr + i)) {
+ t = *(ptr + i);
+ *(ptr + i) = *(ptr + j);
+ *(ptr + j) = t;
+ }
+ }
+ }
+ for (i = 0; i < n; i++)
+ printf("%d ", *(ptr + i));
+}
+int main()
+{
+ int n,a[50],i;
+ printf(" Unesite broj elemenata niza : ");
+ scanf("%d",&n);
+ for(i=0;i<n;i++)
+ {
+ scanf("%d",&a[i]);
+ }
+ sort(n, a);
+ return 0;
+}
+58. Napisati program koji kopira prvi string u drugi string.
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void main()
+{
+ char str1[100], str2[100];
+ int i;
+ printf("Unesite string:\n");
+fgets(str1, sizeof str1, stdin);
+i=0;
+ while(str1[i]!='\0')
+ {
+ str2[i] = str1[i];
+ i++;
+ }
+ str2[i] = '\0';
+ printf("\nPrvi string je : %s\n", str1);
+ printf("Drugi string je : %s\n", str2);
+}
+59. Napisati program koji sabira sumu svih elemenata u nizu pomoću pointera.
+#include <stdio.h>
+#include <stdlib.h>
+void main()
+{
+ int niz[10];
+ int i,n,s= 0;
+ int *p;
+ printf(" Unesite broj elemenata niza : ");
+ scanf("%d",&n);
+ for(i=0;i<n;i++)
+ {
+printf(" element: %d : ",i+1);
+scanf("%d",&niz[i]);
+}
+ p = niz;
+ for (i=0; i<n; i++) {
+ s+=*p;
+ p++;
+ }
+ printf("Suma niza je %d", s);
+}
+60. Napisati program koji ce učitati string od 10 karaktera,a na ekranu ispisati samo one
+karaktere koji predstavljaju slova.
+Napisati program koji kopira prvi string u drugi string.
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+char s[10];
+int i;
+printf("Unesite string: \n");
+gets(s);
+for(i=0;i<10;i++) {
+if((s[i]>='a' && s[i]<='z') || (s[i]>='A' && s[i]<='Z')) {
+printf("%c",s[i]);
+}
+}
+}
+61. Napisati program koji ce učitati string od 10 karaktera, a zatim na pozicijama parnih indeksa
+postaviti broj 5.
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+char s[10];
+int i;
+printf("Unesite string: \n");
+scanf("%s",&s);
+for(i=0;i<10;i++) {
+if((i%2==0)) {
+s[i]='5';
+}
+}
+puts(s);
+}
+62. Napisati program koji ucitava strukturu Racunar koja ima elemente model i cijena,a na
+ekranu ispisuje sve unijete vrijednosti za jednu promenjivu tipa struktura Računar.
+#include <stdio.h>
+#include <stdlib.h>
+struct Racunar {
+char model[20];
+int cijena;
+};
+Int main()
+{
+struct Racunar a;
+printf("Unesite model a: ");
+scanf("%s",&a.model);
+printf("Unesite cijenu: ");
+scanf("%d",&a.cijena);
+printf("%s",a.model);
+printf("%d",a.cijena);
+}
+63. Napisati program koji provjerava da li je broj paran ili neparan koristeci funkcije.
+#include <stdio.h>
+#include <stdlib.h>
+int parnepar(int n1)
+{
+ return (n1 & 1);
+}
+int main()
+{
+ int n1;
+ printf("Unesite broj: ");
+ scanf("%d", &n1);
+ if(parnepar(n1))
+ {
+ printf("Broj je neparan.\n\n");
+ }
+ else
+ {
+ printf("Broj je paran.\n\n");
+ }
+ return 0;
+}
+64. Napisati program koji ispisuje ukupan broj rijeci u stringu.
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void main()
+{
+ char str[100];
+ int i,r;
+ printf("Unesite string:\n ");
+ fgets(str, sizeof str, stdin);
+ i = 0;
+ r = 1;
+ while(str[i]!='\0')
+ {
+ if(str[i]==' ' || str[i]=='\n' || str[i]=='\t')
+ {
+ r++;
+ }
+ i++;
+ }
+ printf("Ukupan broj rijeci u stringu je : %d\n", r-1);
+}
+65. Napisati program koji ispisuje veći od dva broja pomoću pointera.
+#include <stdio.h>
+#include <stdlib.h>
+void main()
+{
+int broj1,broj2,*p=&broj1,*d=&broj2;
+ printf(" Unesite prvi broj: ");
+ scanf("%d",p);
+ printf(" Unesite drugi broj : ");
+ scanf("%d",d);
+if(*p>*d)
+{
+ printf("\n\n %d je veci broj.\n\n",*p);
+}
+else
+{
+ printf("\n\n %d je veci broj.\n\n",*d);
+}
+}
+66. Napisati program koji ispisuje da li je broj prost ili nije prost pomoću funckije.
+#include <stdio.h>
+#include <stdlib.h>
+int prost(int);
+int main()
+{
+ int n,p;
+ printf(" Unesite broj : ");
+ scanf("%d",&n);
+ p =prost(n);
+ if(p==1)
+ printf("%d je prost broj.\n",n);
+ else
+ printf(" %d nije prost broj.\n",n);
+ return 0;
+}
+int prost(int n)
+{
+ int i=2;
+ while(i<=n/2)
+ {
+ if(n%i==0)
+ return 0;
+ else
+ i++;
+ }
+ return 1;
+}
+67. Napisati program u kome se unosi string i štampa se novi string u kome nema razmaka.
+#include <stdio.h>
+#include <string.h>
+main() {
+ int i,n,j=0;
+char str[80],novi[80];
+puts("Unesi string:\n");
+gets(str);
+n=strlen(str);
+for (i=0;i<=n;i++)
+ if (str[i]!=' ') {
+ novi[j]=str[i];
+ j++;
+ }
+novi[j]='\0';
+printf("Novi string bez razmaka:\n");
+puts(novi);
+}
+68. U programu omogućite unos pet brojeva i izračunati aritmetičku sredinu.
+#include <stdio.h>
+void main()
+{
+ int i, broj, uk=0;
+ for (i=1; i<=5; i++)
+ {
+ printf("\nUčitaj %d. cijeli broj: ", i);
+ scanf("%d", &broj);
+ uk=uk+broj;
+ }
+ printf("\nAritmetička sredina je %.2f", uk/5.0);
+ return;
+}
+69. Unesite i odštampajte string.
+#include <stdio.h>
+main()
+{
+ char stringVarijabla[100];
+ printf("Unesite string: ");
+ scanf("%s",stringVarijabla); // ulaz - učitavanje stringa
+ printf("String = %s", stringVarijabla); // izlaz - ispis stringa
+ return 0;
+}
+70. Napisati program koji za dvije zadate cjelobrojne promjenljive na standardni izlaz ispisuje
+redom njihov zbir, razliku, proizvod, količnik i kvadratni korijen.
+#include <stdio.h>
+#include <math.h> //Koristi se zbog ugradjene funkcije sqrt
+int main(){
+int a,b;
+printf("Uneti brojeve :");
+scanf("%d%d",&a,&b);
+printf("Zbir: %d\n",a+b);
+printf("Razlika: %d\n",a-b);
+printf("Proizvod: %d\n",a*b);
+printf("Kolicnik: %f\n",(double)a/b);
+printf("Kvadratni korijen od broja %d je %f\n",a,sqrt(a));
+printf("Kvadratni korijen od broja %d je %f\n",b,sqrt(b));
+return 0;
+}
+71. Napisati funkciju koja izračunava faktorijel datog broja.
+#include <stdio.h>
+#include <stdlib.h>
+void faktorijel(int broj)
+{
+int i, fakt=1;
+for(i=1; i<=broj; i++)
+fakt *= i;
+printf("%d",fakt);
+}
+int main()
+{
+ int a;
+ printf("Unesite broj: ");
+ scanf("%d",&a);
+ faktorijel(a);
+}
+72. Napisati program koji štampa sve proste brojeve manje od 1000.
+#include <stdio.h>
+#include <stdlib.h>
+int prost(unsigned int broj)
+{
+int i;
+for(i=2; i<broj; i++)
+if(broj % i == 0)
+return 0;
+return 1;
+}
+int main()
+{
+int i;
+for(i=1; i<=1 ; i++)
+if(prost(i) == 1)
+printf("%d\t", i);
+return 0;
+}
+73. Učitati niz karaktera sa tastature i odrediti mu dužinu.
+#include <stdio.h>
+int main()
+{
+char niz[10];
+scanf(“%s“, &niz);
+int i, duzina = 0;
+for(i=0; niz[i] != '\0'; i++)
+duzina++;
+printf(“%d“, duzina);
+}
+74. Učitati riječ. Sadrži li riječ malo ili veliko slovo 'z'?
+#include <stdio.h>
+#include <string.h>
+void main() {
+ char r[100];
+ int i=0, brojac=0, n;
+ printf("\nUčitaj riječ:");
+ scanf("%s", &r[0]);
+ n = strlen(r);
+ for (i=0; i<n; i++)
+ if(r[i]=='z' || r[i]=='Z')
+ brojac++;
+ printf("\nRiječ %s sadrži %d puta slovo \'z\'", r, brojac);
+ return;
+}
+75. Napisati program koji štampa memorijske lokacije članova niza od 10 cijelih brojeva.
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+int niz[10], i;
+for(i=0; i<5; i++)
+printf("Adresa clana %d: %d\n", i, &niz[i]);
+return 0;
+}
+76. Upisati tri broja i ispisati najveći koristeći pokazivače.
+#include <stdio.h>
+void main() {
+int a, b, c, max, *pa, *pb, *pc, *pmax;
+pa = &a;
+pb = &b;
+pc = &c;
+pmax = &max;
+printf("\nUpiši tri broja: ");
+scanf("%d %d %d", pa, pb, pc);
+*pmax = *pa;
+if (*pb > *pmax)
+*pmax = *pb;
+if (*pc > *pmax)
+*pmax = *pc;
+printf("\nNajveći broj je %d", *pmax);
+return;
+}
+77. Napisati program u kome, pomoću pokazivača, određujemo manji od dva unijeta realna
+broja.
+#include<stdio.h>
+int main(){
+double a,b;
+double *pa=&a,*pb=&b,*pc;
+printf("Unesi dva realna broja: ");
+scanf("%lf%lf",pa,pb);
+if(*pa<*pb)pc=pa;
+else pc=pb;
+printf("%f",*pc);
+return 0;
+}
+78. Upisati vrijednost dvije varijable i sabrati ih. Ispisati vrijednost varijabli i njihovog zbira te
+vrijednosti adresa svih korištenih varijabli.
+#include <stdio.h>
+void main() {
+int a, b, c, *pa, *pb, *pc;
+pa = &a;
+pb = &b;
+pc = &c;
+printf("\nUpiši dva broja");
+scanf("%d %d", pa, pb);
+*pc = *pa + *pb;
+printf("\na = %d adresa je %x", *pa, pa);
+printf("\nb = %d adresa je %x", *pb, pb);
+printf("\nc = a+b = %d adresa je %x", *pc, pc);
+return;
+}
+79. Učitati broj. U funkciji izračunati njegov kub. Rezultat ispisati u glavnom programu.
+#include <stdio.h>
+int kub(int x) {
+int rez;
+rez = x*x*x;
+return rez;
+}
+void main() {
+int a, k;
+printf("\nUpiši broj: ");
+scanf("%d", &a);
+k = kub(a);
+printf("\nKub broja %d je %d.", a, k);
+return;
+}
+80. Učitati dužine katete trougla. U funkciji izračunati dužinu hipotenuze i ispisati je u glavnom
+programu.
+#include <stdio.h>
+#include <math.h>
+float hipotenuza(float a, float b) {
+float c;
+c = sqrt(a*a + b*b);
+return c;
+}
+void main() {
+ float str_a, str_b, hipo;
+ printf("\n Učitaj obje katete: ");
+ scanf("%f %f", &str_a, &str_b);
+ hipo = hipotenuza(str_a, str_b);
+ printf("Hipotenuza je %.2f", hipo);
+ return;
+}
+81. Učitati riječ. Ako je prvo slovo riječi veliko ili malo slovo 's' ispisati riječ s razmacima među
+slovima, u suprotnom ispisati svako slovo u novi red.
+#include <stdio.h>
+#include <string.h>
+void main(){
+ char r[100];
+ int i, n;
+ printf("\nUčitaj riječ:");
+ scanf("%s", &r[0]);
+ n=strlen(r);
+ for(i=0; i<n; i++)
+ if(r[0]=='s' || r[0]=='S')
+ printf("%c ", r[i]);
+ else
+ printf("\n%c", r[i]);
+ return;
+}
+82. Provjeri da li je broj jednak zbiru kubova njegovih cifara.
+#include <stdio.h>
+int main (){
+int n;
+printf("unesi broj n \n");
+scanf("%d" ,&n);
+int sum=0;
+int m=n;
+while(m>0){
+int x=m%10;
+int k=x*x*x;
+sum=sum+k;
+m=m/10;
+}
+if(n==sum)
+printf("Broj je jednak zbiru kubova cifara");
+else
+printf("Broj nije jednak zbiru kubova cifara");
+}
+83. Napisi kod koji štampa zbir kvadrata svih neparnih brojeva od a do b.
+#include <stdio.h>
+int main (){
+int a,b;
+printf("unesi brojeve a i b, a mora biti manji\n");
+scanf("%d %d" ,&a ,&b);
+int sum=0;
+int i=a;
+while(i<b){
+if(i%2==1){
+sum=sum+i*i;
+i++;
+}else{
+i++;
+}
+}
+printf("suma kvadrata neparnih brojeva od a do b je %d" ,sum);
+}
+84. Štampaj sve proste brojeve od a do b.
+#include <stdio.h>
+int main (){
+int a,b;
+printf("unesi brojeve a i b, a mora biti manji\n");
+scanf("%d%d",&a ,&b);
+for(int j=a;j<=b;j++){
+printf("%d " ,prost(j));
+}
+}
+int prost(n){
+int t=0;
+for(int i=2;i<n;i++){
+if(n%i==0){
+t++;
+break;
+}
+}
+if(t==0)
+return n;
+}
+85. Unesi broj n pa štampaj srednju cifru.
+#include <stdio.h>
+int main (){
+int n;
+printf("unesi broj n\n");
+scanf("%d" ,&n);
+int t=0;
+int m=n;
+while(m>0){
+m=m/10;
+t++;
+}
+int p=t-t/2;
+int c;
+while(p>0){
+c=n%10;
+n=n/10;
+p--;
+}
+if(t%2==0)
+printf("jedna od srednjih cifara je %d" ,c);
+else
+printf("srednja cifra je %d" ,c); }
+86. Dat je cetvorocifreni broj.Štampaj zbir kvadrata njegovih cifara.
+#include <stdio.h>
+int main (){
+int n;
+printf("unesi cetvrorcifreni broj\n");
+scanf("%d" ,&n);
+int j=n%10;
+int d=n/10%10;
+int s=n/100%10;
+int h=n/1000;
+int zbir=j*j+d*d+s*s+h*h;
+printf("%d" ,zbir);
+}
+87. Dat je trocifren broj. Odredi broj koji se dobija zamjenom prve i zadnje cifre.
+#include <stdio.h>
+int main (){
+int n;
+printf("unesi trocifren broj\n");
+scanf("%d" ,&n);
+int s= n/100;
+int d= n/10%10;
+int j=n%10;
+int m=j*100+d*10+s;
+printf("%d" ,m);
+}
+88. Za državu je poznata njena površina i broj stanovnika.Odredi gustinu naseljenosti.
+#include <stdio.h>
+int main (){
+double p;
+int br;
+printf("unesi povrsinu i broj stanovnika\n");
+scanf("%f %d" ,&p ,&br);
+double g=br/p;
+printf("gustina naseljenosti je %f" ,g);
+}
+89. Štampaj sve proste djelioce broja n.
+#include <stdio.h>
+int main (){
+int n;
+printf("unesi broj n \n");
+scanf("%d" ,&n);
+for (int i=1;i<=n;i++){
+if(n%i==0){
+int k=2;
+int p=0;
+while(k<i){
+if(i%k==0){
+p++;
+k++;
+}else{
+k++;
+}
+}
+if(p==0){
+printf("%d je prost djelilac\n" ,i);
+}
+}
+}
+}
+90. Za zadate a i b, nađi najveći zajednički djelilac.
+#include <stdio.h>
+int main (){
+int a,b, temp;
+printf("unesi dva broja\n");
+scanf("%d%d",&a ,&b);
+while(b!=0){
+temp=a;
+a=b;
+b=temp%b;
+}
+int nzd=a;
+printf("%d" ,nzd);
+}
+91. Štampaj najveći neparni pozitivni djelilac broja n.
+#include <stdio.h>
+int main (){
+int n;
+printf("unesu broj n \n");
+scanf("%d" ,&n);
+int i=1;
+int max=i;
+while(i<n){
+if(n%i==0){
+max=i;
+i++;
+}else{
+i++;
+}
+}
+printf("njveci djelilac boroja n je %d\n" ,max);
+}
+92. Napiši kod koji za zadati n, štampa najmanji k, takav da n nije veći od 2k.
+#include <stdio.h>
+int main (){
+int n,k;
+printf("unesi broj\n");
+scanf("%d" ,&n);
+if(n%2==0){
+k=n/2;
+}else{
+n++;
+k=n/2;
+}
+printf("%d" ,k);
+}
+93. Za broj n štampaj zbir najveće i najmanje njegove cifre.
+#include <stdio.h>
+int main (){
+int n;
+printf("Unesi broj: ");
+scanf("%d" ,&n);
+int m=n;
+int k=n%10;
+int min=k;
+while (n>0){
+k = n%10;
+if(k<=min){
+min=k;
+n=n/10;
+}else{
+n=n/10;
+}
+}
+printf("Najmanja cifra je %d \n" ,min);
+k=m%10;
+int max=k;
+while (m>0){
+k = m%10;
+if(k>=max){
+max=k;
+m=m/10;
+}else{
+m=m/10;
+}
+}
+printf("Najveca cifra je %d\n" ,max);
+printf("Zbir najvece i najmanje cifre je %d\n" ,max+min);
+}
+94. Da li je n stepen dvojke?
+#include <stdio.h>
+int main (){
+int n;
+int st=1;
+printf("Unesi broj: ");
+scanf("%d" ,&n);
+while(st<n){
+st=st*2;
+}
+if(st==n)
+printf("Da");
+else
+printf("Ne");
+}
+95. Napiši kod koji za date cijele brojeve a i b štampa zbir svih brojeva izmedju a i b.
+#include <stdio.h>
+int main (){
+int a,b,i;
+int sum = 0;
+printf("unesi 2 broja \n");
+scanf("%d %d" ,&a ,&b);
+for(i=a;i<b;i++){
+sum = sum+i;
+}
+for(i=b;i<a;i++){
+sum=sum+i;
+}
+printf("%d" ,sum);
+}
+96. Napisi kod za koji zadati broj n provjerava je li pozitivan, ako jeste onda n predstavlja broj
+učenika i njihove ocjene iz matemike izračunava njihov prosjek. A ako je n negativan vraca 0.
+#include <stdio.h>
+int main (){
+int n;
+double sum=0;
+int i;
+int k;
+printf("Unesi broj: ");
+scanf("%d" ,&n);
+if (n>0){
+printf("Unesite ocjene iz matematike: \n");
+for(i=0;i<n;i++){
+scanf("%d" ,&k);
+sum=sum+k;
+}
+double avg = sum/n;
+printf("Prosjek je %f \n" ,avg);
+}else{
+return 0;
+}
+}
+97. Upisi broj x i ispitaj sve brojeve dok ne dođes do x, zatim ispiši koliko je tih brojeva do x.
+Ispisati koliko je parnih brojeva i zbir svih učitanih brojeva.
+#include <stdio.h>
+int main (){
+int x;
+printf("Unesi broj x: ");
+scanf("%d" ,&x);
+int c=0;
+int sum=0;
+int p=0;
+for(int i=1;i<x;i++){
+c++;
+sum=sum+i;
+if(i%2==0){
+p++;
+}
+}
+printf("Ima %d brojeva, %d parnih brojeva, a suma je %d" ,c ,p ,sum);
+}
+98. Štampaj sve brojeve od a do b koji su oblika 3k+1 za ucitano k.
+include <stdio.h>
+int main (){
+int a,b,k;
+printf("Unesi dva broja i k broj: ");
+scanf("%d %d %d" ,&a ,&b ,&k);
+while(a<b){
+if(a==3*k+1){
+printf("%d\n",a);
+break;
+}else{
+a++;
+}
+}
+while(b<a){
+if(b==3*k+1){
+printf("%d\n",b);
+}else{
+b++;
+}
+}
+}
+99. Napisati funkciju kojom se odredjuje broj pojavljivanja negativnih cijelih brojeva u nizu od N e
+elemenata. Funkciju pozvati iz glavnog programa.
+#include <stdio.h>
+#include <stdlib.h>
+int fun(int *x, int n)
+{
+int i,br=0;
+for(i=0;i<n;i++){
+if (x[i]<0){
+br++; } }
+return br;
+}
+int main(int argc, char *argv[])
+{
+int x[10],i,j,n,pom;
+printf("Unesi duzinu niza:\n");
+scanf("%d",&n);
+printf("Unesi niz\n");
+for(i=0;i<n;i++){
+scanf("%d",&x[i]); }
+printf("Ima %d negativna elementa\n",fun(&x[0],n));
+return 0;}
+100. Napisati program u kome se pomoću pokazivača unose 2 cijela broja. Izvrši sabiranje pomoću
+pokazivača.
+#include<stdio.h>
+int main()
+{
+int a,b,s,*p,*q;
+printf("Unesi dva cijela broja: ");
+scanf("%d%d",&a,&b);
+p=&a;
+q=&b;
+s=*p+*q;
+printf("Zbir brojeva je %d",s);
+return 0;
+}
+100. Prebaciti unijeti string u uppercase.
+#include <stdio.h>
+#include <ctype.h>
+void main() {
+int i;
+char s[100];
+puts("Unesi tekst: ");
+gets(s);
+for (i=0;s[i]!='\0';i++)
+s[i]=toupper(s[i]);
+s[i]='\0';
+printf("Unijeti tekst prebacen u upercase:\n%s",s);
+}
+101. Kreirati strukturu FudbalskiKlubovi koja sadrži naziv, broj_klubova i efikasnost klubova. U
+funkciji main kreirati niz FudbalskiKlubovi i prikazati njihove nazive, broj klubova i efikasnost.
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct FudbalskiKlubovi{
+int broj_klubova;
+float efikasnost_klubova;
+char naziv [20];
+};
+main (){
+int i,n;
+struct FudbalskiKlubovi FK[60];
+printf ("Unesite broj klubova: ");
+scanf("%d",&n);
+printf ("Unesite informacije o klubovima:\n");
+for (i=0;i<n;i++){
+printf("Unesite naziv kluba %d\n",i);
+scanf("%s",&FK[i].naziv);
+printf("Unesite broj klubova %d\n",i);
+scanf("%d",&FK[i].broj_klubova);
+printf("Unesite efikasnost klubova %d\n",i);
+scanf("%f",&FK[i].efikasnost_klubova);
+}
+for (i=0;i<=n;i++)
+{
+printf("Naziv kluba broj %d je %s, broj klubova je %d a efikasnost klubova je
+%f\n",i,FK[i].naziv,FK[i].broj_klubova,FK[i].efikasnost_klubova);
+}
+}
+102. Napisati funkciju koja određuje maksimum dva cijela broja. U glavnom pogramu odredi
+maksimum tri cijela broja.
+#include<stdio.h>
+int max(int a, int b)
+{
+ if (a>b)return a;
+ else return b;
+
+}
+main()
+{
+ int x,z,y,m;
+ printf("Unesi tri cijela broja: ");
+ scanf("%d%d%d",&x,&y,&z);
+ m=max(x,y);
+ m=max(z,m);
+ printf("Najveci od tri unijeta broja je: %d",m);
+}
+103. Napisati program u kome se štampa tabela sa ASCII kodovima svih slova abecede.
+#include <stdio.h>
+main()
+{ int i;
+char c1='A';
+char c2='a';
+printf("ASCII kod i simbol: \n");
+for (i=0;i<26;i++)
+printf("%8d > %c\n%8d > %c\n", c1+i,c1+i,c2+i,c2+i);
+}
+104. Napisati program koji učitava 3 broja I koristeći pokazivače rotira njihove vrijednosti.
+#include<stdio.h>
+int main()
+{
+int a,b,c, *pa,*pb,*pc,pom;
+printf("Unesi tri cela broja: ");scanf("%d%d%d",&a,&b,&c);
+pa=&a
+pb=&b;
+pc=&c;
+printf("Pocetni redosled brojeva: a=%d, b=%d, c=%d\n",*pa,*pb,*pc);
+pom=*pa;
+*pa=*pb;
+*pb=*pc;
+*pc=pom;
+printf("Novi redosled brojeva:a=%d, b=%d, c=%d",*pa,*pb,*pc);
+return 0;
+}
+105. Napisati program koji učitava brojeve u opsegu od 1 do 100 dok korisnik ne unese broj van
+opsega i racuna sumu parnih unijetih brojeva.
+#include <stdio.h>
+main()
+{
+ int broj, suma=0;
+ printf("Unesite ceo broj u opsegu od 1 do 100: ");
+ scanf("%d", &broj);
+ while(broj>=1 && broj<=100)
+ {
+ if(broj%2==0)
+ {
+ suma+=broj;
+ }
+ printf("Unesite ceo broj u opsegu od 1 do 100: ");
+ scanf("%d", &broj);
+ }
+ printf("Suma svih parnih brojeva koje ste upisali,!nl!a nalaze se u opsegu od 1 do 100 iznosi: %d.!nl!",
+suma);
+}
+106. Program za sortiranje u alfabetskom redosljedu učitanog niza stringova i određivanje dužine
+sortiranih stringova.
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+ char s[20][20]; //Niz stringova radi na slican nacin kao matrica kod nizova, prvi broj odredjuje broj
+stringova u nizu, dok drugi broj odredjuje duzinu stringa
+ char temp[20]; //Pomocni string je potreban za unosenje niza stringova i bubble sort
+ int i,n,j;
+ printf("Unesite broj stringova: ");
+ scanf("%d",&n);
+ printf("Unesite stringove: \n");
+ for(i=0;i<n;i++)
+ {
+ scanf("%s",&temp); //Unosenje pomocnog strniga
+ strcpy(s[i],temp); //Pomocni string se copira na mjesto i u nizu stringova
+ }
+ // Bubble sort
+ for(int i=0; i<n; i++)
+ {
+ for(int j=0; j<n-1-i; j++){
+ if(strcmp(s[j], s[j+1]) > 0){
+ strcpy(temp, s[j]);
+ strcpy(s[j], s[j+1]);
+ strcpy(s[j+1], temp);
+ }
+ }
+ }
+ printf("Unijeti stringovi: \n");
+ for(i=0;i<n;i++)
+ {
+ printf("%s \n",s[i]);
+ }
+}
+107. Program za ispisavanje prvih k ili poslednjih k znakova datog stringa.
+#include <stdio.h>
+#include <string.h>
+void pocetak(char *s, int k)
+{
+while(k && *s)
+{
+putchar(*s);
+s++;
+k--;
+}
+putchar("\n");
+}
+void kraj(char *s, unsigned int k)
+{
+if(strlen(s) >= k )
+puts(s+strlen(s)-k);
+else
+puts(s);
+}
+main()
+{
+int k;
+char str[50];
+printf ("Unesite string: ");
+gets(str);
+printf ("Unesite k: ");
+scanf("%d",&k);
+printf ("Prvih %d znakova datog stringa je: ",k);
+pocetak(str,k);
+printf ("\nPoslednjih %d znakova datog stringa je: ",k);
+kraj(str,k);
+}
+104. Program za ispisivanje prvih 30 prirodnih brojeva i njihovih kvadrata.
+#include <stdio.h>
+main()
+{
+ int number;
+ printf("Broj Kvadrat");
+ for(number=1;number<31;number++)
+ {
+ printf("\n%d %d",number,number*number);
+ }
+}
+105. Program za učitavanje srednjih temperatura po mjesecima za 12 mjeseci i izračunavanje
+srednje temperature za cijelu godinu.
+#include <stdio.h>
+main()
+{
+ double mnth[12], srednjaTemp = 0.;
+ int i;
+ printf("Unesite srednje temperature za 12 mjeseci.");
+ for(i=0; i<12; i++)
+ {
+ printf("Srednja temperatura za mjesec %d: ", i+1);
+scanf("%lf", &mnth[i]);
+srednjaTemp += mnth[i];
+ }
+ srednjaTemp /= 12;
+ printf("Srednja temperatura za cijelu godinu iznosi %lf stepeni.", srednjaTemp);
+}
+106. Program za štampanje svih stepena broja dva koji nijesu veći od unaprijed zadate granice
+koja je veća od broja 2.
+#include <stdio.h>
+main()
+{
+ int i,a;
+ printf("Unesite granicu ispisa: ");
+ scanf("%d",&a);
+ i=1;
+ do
+ {
+ printf(" %d",i);
+ i*=2;
+ }
+ while(i <=a);
+}
+107. Program koji prikazuje koliko puta se broj k pojavljuje u nizu.
+#include <stdio.h>
+int main() {
+ int a[50],n,i,k,j=0;
+ printf("Unesite duzinu niza: ");
+ scanf("%d",&n);
+ printf("Unesite clanove niza: \n");
+ for(i=0;i<n;i++)
+ {
+ scanf("%d",&a[i]);
+ }
+ printf("Unesite broj k: ");
+ scanf("%d",&k);
+ for(i=0;i<n;i++)
+ {
+ if(k==a[i])
+ {
+ j++;
+ }
+ }
+ printf("U nizu broj %d se pojavljuje %d puta",k,j);
+}
+108. Program koji sortira unijeti niz u rastući redosled.
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+ char s[20][20]; //Niz stringova radi na slican nacin kao matrica kod nizova, prvi broj odredjuje broj
+stringova u nizu, dok drugi broj odredjuje duzinu stringa
+ char temp[20]; //Pomocni string je potreban za unosenje niza stringova i bubble sort
+ int i,n,j;
+ printf("Unesite broj stringova: ");
+ scanf("%d",&n);
+ printf("Unesite stringove: \n");
+ for(i=0;i<n;i++)
+ {
+ scanf("%s",&temp); //Unosenje pomocnog strniga
+ strcpy(s[i],temp); //Pomocni string se copira na mjesto i u nizu stringova
+ }
+ // Bubble sort
+ for(int i=0; i<n; i++)
+ {
+ for(int j=0; j<n-1-i; j++){
+ if(strcmp(s[j], s[j+1]) > 0){
+ strcpy(temp, s[j]);
+ strcpy(s[j], s[j+1]);
+ strcpy(s[j+1], temp);
+ }
+ }
+ }
+ printf("Unijeti stringovi: \n");
+ for(i=0;i<n;i++)
+ {
+ printf("%s \n",s[i]);
+ }
+}
+109. Program koji broji koliko cifara i praznina se pojavljuje u sringu
+#include <stdio.h>
+#include <string.h>
+int main() {
+ int i=0,b=0,c=0;
+ char a[50];
+ printf("Unesite string: ");
+ gets(a);
+ while(a[i]!='\0')
+ {
+ if(a[i]>='0'&&a[i]<='9')
+ c++;
+ if(a[i]==' ')
+ b++;
+ i++;
+ }
+ printf("U stringu ima %d cifara i %d praznina",c,b);
+}
+110. Program koji štampa sve trocifrene brojeve koji su jednaki zbiru kubova svojih cifara.
+#include <stdio.h>
+#include <string.h>
+int main() {
+ int i,m,sum;
+ for(i=100;i<1000;i++)
+ {
+ sum=0;
+ m=i;
+ sum=sum+((m%10)*(m%10)*(m%10));
+ m=m/10;
+ sum=sum+((m%10)*(m%10)*(m%10));
+ m=m/10;
+ sum=sum+((m%10)*(m%10)*(m%10));
+ if(sum==i)
+ printf("%d\n",i);
+ }
+}
+111. Program koji prikazuje sve članove unijetog niza koji su manji od njegove aritmetičke sredine.
+#include <stdio.h>
+#include <string.h>
+int main() {
+ int a[50],i,n;
+ double m=0.0;
+ printf("Unesite duzinu niza: ");
+ scanf("%d", &n);
+ printf("Unesite niz: \n");
+ for(i=0;i<n;i++)
+ {
+ scanf("%d", &a[i]);
+ m=m+a[i];
+ }
+ m=m/n;
+ printf("Clanovi niza manji od sredine su: \n");
+ for(i=0;i<n;i++)
+ {
+ if(a[i]<m)
+ printf("a[%d]=%d \n",i,a[i]);
+ }
+}
+112. Program koji štampa zbir članova niza sa parnim i nepranim indeksom.
+#include <stdio.h>
+#include <string.h>
+int main() {
+ int a[50],i,n,par=0,nep=0;
+ printf("Unesite duzinu niza: ");
+ scanf("%d", &n);
+ printf("Unesite niz: \n");
+ for(i=0;i<n;i++)
+ {
+ scanf("%d", &a[i]);
+ if(i%2==0)
+ par=par+a[i];
+ else
+ nep=nep+a[i];
+ }
+ printf("Zbir brojeva sa parnim indeksom je %d\nZbir brojeva sa neparnim indeksom je %d\n",par,nep);
+}
+113. Program koji štampa n-ti broj u fibenačijevom nizu(svaki broj je predhodnik prošla 2: 0,1,1,2,3,5..)
+pomoću rekurzivne funkcije.
+#include <stdio.h>
+int fibonaci(int n);
+int main() {
+ int n;
+ printf("Unesite n: ");
+ scanf("%d",&n);
+ printf("Broj %d u fibenacijevom nizu je: %d",n,fibonaci(n));
+ return 0;
+}
+int fibonaci(int n) //Program ne racuna 0 kao prvi znak vec kao nultni
+{
+ if(n==1)
+ return 1;
+ else if(n==0)
+ return 0;
+ else
+ return fibonaci(n-1)+fibonaci(n-2);
+}
+114. Program za pogađanje brojeva pomoću podprograma.
+#include <stdio.h>
+ int broj;
+ void ispis(void);
+ main()
+ {
+ printf("Ovo je igra pogadjanja broja\n");
+ ispis();
+ for(; broj != 420;)
+ {
+ printf("\nNije tacno\n");//:ppp
+ ispis();
+ }
+ printf("\nPogodili ste broj\n");//:(
+ return 0;
+ }
+ void ispis(void)
+ {
+ printf("Pogodite broj od 0 do 1000\n");//:ppp
+ scanf("%d", &broj);
+ }
+
+
+
+
+
